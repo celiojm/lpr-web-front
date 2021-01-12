@@ -10,6 +10,9 @@ const Cities = props =>  {
 
      const [cities, setCities] = useState([]);
 
+    /**===============================
+     *  fetch all cities
+     */
     useEffect(()=>{
         Services.CityService.fetchAll()
             .then(res =>{
@@ -21,11 +24,16 @@ const Cities = props =>  {
             });
     },[]);
 
-    const onDeleteRow = id =>{
-        Services.CityService.deleteCity(id)
+    const onDeleteRow = cityIds =>{
+        Services.CityService.deleteCity(cityIds)
             .then(res => {
-                if(res.success)
-                    toast.success('Successfully updated');
+                if(res.success){
+                    let newCities = cities.filter(city =>{
+                        return cityIds.indexOf(city._id) === -1;
+                    });
+                    setCities(newCities);
+                    toast.success(`Excluiu ${res.count} cidades com sucesso`);
+                }
             })
     };
 
@@ -61,8 +69,6 @@ const Cities = props =>  {
         return date.toDateString();
     };
 
-    const Loading = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"/></div>;
-
         return (
             <div className="animated">
                 <Card>
@@ -86,10 +92,10 @@ const Cities = props =>  {
                                 beforeSaveCell: onBeforeSaveCell,
                                 afterSaveCell: onAfterSaveCell,
                             }}>
-                            <TableHeaderColumn dataField="city" dataSort>City</TableHeaderColumn>
-                            <TableHeaderColumn  dataField="state">State</TableHeaderColumn>
-                            <TableHeaderColumn dataField="createdAt" dataFormat={DateFormatter} dataSort editable={false}>Created</TableHeaderColumn>
-                            <TableHeaderColumn dataField="updatedAt" dataFormat={DateFormatter} dataSort editable={false}>Updated</TableHeaderColumn>
+                            <TableHeaderColumn dataField="city" dataSort width="200">City</TableHeaderColumn>
+                            <TableHeaderColumn  dataField="state" width="200">State</TableHeaderColumn>
+                            <TableHeaderColumn dataField="createdAt" dataFormat={DateFormatter} dataSort editable={false} width="200">Created</TableHeaderColumn>
+                            <TableHeaderColumn dataField="updatedAt" dataFormat={DateFormatter} dataSort editable={false} width="200">Updated</TableHeaderColumn>
                             <TableHeaderColumn dataField='_id' isKey={true} hidden={true}>Action</TableHeaderColumn>
                         </BootstrapTable>
                     </CardBody>

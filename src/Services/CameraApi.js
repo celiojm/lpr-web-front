@@ -1,26 +1,28 @@
-const create = city =>{
-    return fetch('/city/create',{
+const create = camera =>{
+    return fetch('/camera/create',{
         method: 'post',
-        body: JSON.stringify(city),
+        body: JSON.stringify(camera),
         headers: {
             'Content-Type': 'application/json'
         }
-    }).then(res =>res.json())
+    })
+        .then(res =>res.json())
         .then(data => data);
 };
 
-const fetchAll = () =>{
-    return fetch('/city/fetchAll', {
-        method: 'get',
+const fetchAll = (params) =>{
+    return fetch('/camera/fetchAll', {
+        method: 'post',
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify(params)
     }).then(res =>res.json())
         .then(data => data);
 };
 
 const update = city =>{
-    return fetch('/city/update', {
+    return fetch('/camera/update', {
         method: 'put',
         headers: {
             'Content-Type': 'application/json'
@@ -30,20 +32,20 @@ const update = city =>{
         .then(data => data);
 };
 
-const deleteCity = cities =>{
-    return fetch('/city/delete', {
+const deleteCameras = cameraIds =>{
+    return fetch('/camera/delete', {
         method: 'delete',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({cities: cities})
+        body: JSON.stringify({cameras: cameraIds})
     }).then(res =>res.json())
         .then(data => data);
 };
 
 export default {
-    create: create,
+    create:create,
     fetchAll: fetchAll,
     update: update,
-    deleteCity: deleteCity
+    deleteCameras: deleteCameras
 }

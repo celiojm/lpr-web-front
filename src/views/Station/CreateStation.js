@@ -20,9 +20,9 @@ import Services from '../../Services';
 
 const validationSchema = function (values) {
     return Yup.object().shape({
-        city:null,
         id: Yup.string()
             .required('Station id is required'),
+
     })
 };
 
@@ -58,6 +58,9 @@ const  CreateStation = props => {
     const [option, setOption] = useState(null);
     const [options, setOptions] = useState([]);
 
+    /**==========================
+     *  fetch all cities for dropdown
+     */
     useEffect(()=>{
         Services.CityService.fetchAll()
             .then(res =>{
@@ -84,10 +87,16 @@ const  CreateStation = props => {
         }
         Services.StationService.create({id:values.id, city: option.value})
             .then(res =>{
-                if(res.success)
+                if(res.success){
                     toast.success("Success!");
-                else
+                    props.history.replace('/station/all');
+                }
+                else{
+                    if(res.errorCode)
+                        setErrors({id: res.errorMsg});
                     toast.warn(res.errorMsg);
+                }
+
             });
         setSubmitting(false)
     };
@@ -99,7 +108,7 @@ const  CreateStation = props => {
                 <Col md={4}>
                     <Card>
                         <CardHeader>
-                            <i className="fa fa-map-pin"/><strong>Add Station</strong>
+                            <i className="fa fa-video-camera"/><strong>Add Station</strong>
                         </CardHeader>
                         <CardBody>
                             <hr />

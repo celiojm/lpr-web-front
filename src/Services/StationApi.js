@@ -5,31 +5,45 @@ const create = station =>{
         headers: {
             'Content-Type': 'application/json'
         }
-    }).then(res => {
-        if(res.status === 201)
-            return res.json()
-                .then(data => data);
-        else if(res.status === 401)
-            return {
-                success: false,
-                city:{},
-                errorMsg: "Session expired"
-            };
-        else if(res.status === 400)
-            return {
-                success: false,
-                city:{},
-                errorMsg: "Station Id duplicated"
-            };
-        else
-            return {
-                success: false,
-                user:{},
-                errorMsg: "Something went wrong"
-            };
-    });
+    }).then(res =>res.json())
+        .then(data => data);
+};
+
+const fetchAll = () =>{
+    return fetch('/station/fetchAll', {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res =>res.json())
+        .then(data => data);
+};
+
+const update = station =>{
+    return fetch('/station/update', {
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(station)
+    }).then(res =>res.json())
+        .then(data => data);
+};
+
+const deleteStation = stations =>{
+    return fetch('/station/delete', {
+        method: 'delete',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({stations: stations})
+    }).then(res =>res.json())
+        .then(data => data);
 };
 
 export default {
-    create:create
+    create:create,
+    fetchAll: fetchAll,
+    update: update,
+    deleteStation: deleteStation
 }

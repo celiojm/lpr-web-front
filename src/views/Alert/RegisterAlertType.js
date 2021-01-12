@@ -19,11 +19,13 @@ import Services from '../../Services';
 
 const validationSchema = function (values) {
     return Yup.object().shape({
-        city: Yup.string()
-            .min(4, `City has to be at least 2 characters`)
-            .required('City is required'),
-        state: Yup.string()
-            .required('State is required'),
+        type: Yup.number()
+            .min(1, 'Min 1')
+            .max(20, 'Max 20')
+            .required('Alert Type is required')
+            .typeError('Type should be number'),
+        name: Yup.string()
+            .required('Alert Name is required'),
     })
 };
 
@@ -50,22 +52,22 @@ const getErrorsFromValidationError = (validationError) => {
 };
 
 const initialValues = {
-    city: "",
-    state: "",
+    type: "",
+    name: "",
 };
 
 
-const  CreateCity = props => {
+const  RegisterAlertType = props => {
 
     const onSubmit = async (values, { setSubmitting, setErrors })  =>{
-        Services.CityService.create(values)
+        Services.AlertService.createType(values)
             .then(res =>{
                 if(res.success){
                     toast.success("Successfully created!");
-                    props.history.replace('/city/all');
+                    props.history.replace('/alert/types');
                 }else {
-                   setErrors({state: res.errorMsg});
-                   toast.warn(res.errorMsg);
+                    setErrors({state: res.errorMsg});
+                    toast.warn(res.errorMsg);
                 }
             });
         setSubmitting(false)
@@ -78,7 +80,7 @@ const  CreateCity = props => {
                 <Col md={4} className="text-center">
                     <Card>
                         <CardHeader>
-                            <i className="icon-map"/><strong>Add City</strong>
+                            <i className="icon-bell"/><strong>Register Alert Type</strong>
                         </CardHeader>
                         <CardBody>
                             <hr />
@@ -104,31 +106,29 @@ const  CreateCity = props => {
                                                 <Form onSubmit={handleSubmit} noValidate name='simpleForm'>
                                                     <FormGroup>
                                                         <Input type="text"
-                                                               name="city"
-                                                               id="city"
-                                                               placeholder="City"
-                                                               autoComplete="city"
-                                                               valid={!errors.city}
-                                                               invalid={touched.city && !!errors.city}
+                                                               name="type"
+                                                               id="type"
+                                                               placeholder="Alert Type"
+                                                               valid={!errors.type}
+                                                               invalid={touched.type && !!errors.type}
                                                                required
                                                                onChange={handleChange}
                                                                onBlur={handleBlur}
-                                                               value={values.city} />
-                                                        <FormFeedback>{errors.city}</FormFeedback>
+                                                               value={values.type} />
+                                                        <FormFeedback>{errors.type}</FormFeedback>
                                                     </FormGroup>
                                                     <FormGroup>
                                                         <Input type="text"
-                                                               name="state"
-                                                               id="state"
-                                                               placeholder="State"
-                                                               autoComplete="state"
-                                                               valid={!errors.state}
-                                                               invalid={touched.state && !!errors.state}
+                                                               name="name"
+                                                               id="name"
+                                                               placeholder="Alert Name"
+                                                               valid={!errors.name}
+                                                               invalid={touched.name && !!errors.name}
                                                                required
                                                                onChange={handleChange}
                                                                onBlur={handleBlur}
-                                                               value={values.state} />
-                                                        <FormFeedback>{errors.state}</FormFeedback>
+                                                               value={values.name} />
+                                                        <FormFeedback>{errors.name}</FormFeedback>
                                                     </FormGroup>
                                                     <FormGroup>
                                                         <Button type="submit" color="primary" className="mr-1" disabled={isSubmitting || !isValid}>{isSubmitting ? 'Wait...' : 'Create'}</Button>
@@ -146,4 +146,4 @@ const  CreateCity = props => {
 
 };
 
-export default CreateCity;
+export default RegisterAlertType;

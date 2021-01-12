@@ -10,8 +10,8 @@ export const adminNav = {
           icon: 'icon-user',
           children: [
               {
-                  name: 'Register',
-                  url: '/user/register',
+                  name: 'New User',
+                  url: '/user/create',
               },
               {
                   name: 'Users',
@@ -24,7 +24,7 @@ export const adminNav = {
           icon: 'icon-map',
           children: [
               {
-                  name: 'Add',
+                  name: 'New City',
                   url: '/city/create',
               },
               {
@@ -38,7 +38,7 @@ export const adminNav = {
           icon: 'fa fa-map-pin',
           children: [
               {
-                  name: 'Register',
+                  name: 'New Station',
                   url: '/station/create',
               },
               {
@@ -52,12 +52,12 @@ export const adminNav = {
           icon: 'fa fa-video-camera',
           children: [
               {
-                  name: 'Register',
-                  url: '/admin/camera/register',
+                  name: 'New Camera',
+                  url: '/camera/create',
               },
               {
                   name: 'Cameras',
-                  url: '/admin/camera/all',
+                  url: '/camera/all',
               }
           ],
       },
@@ -66,14 +66,19 @@ export const adminNav = {
           icon: 'icon-bell',
           children: [
               {
-                  name: 'Register',
-                  url: '/admin/alert/register',
+                  name: 'New Alert',
+                  url: '/alert/create',
               },
               {
                   name: 'Alerts',
-                  url: '/admin/alert/all',
+                  url: '/alert/all',
               }
           ],
+      },
+      {
+          name: 'Veículos',
+          url: '/vehicle/all',
+          icon: 'fa fa-automobile',
       },
   ]
 };
