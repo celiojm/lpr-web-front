@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Card, CardHeader, CardBody} from 'reactstrap';
+import {Card, CardHeader, CardBody, Button} from 'reactstrap';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import { AppSwitch } from '@coreui/react'
 import 'react-bootstrap-table/dist//react-bootstrap-table-all.min.css';
@@ -172,6 +172,10 @@ const Users = props => {
         return <AppSwitch className={'mx-1'} variant={'3d'} outline={'alt'} color={'primary'} checked={value} label disabled/>;
     };
 
+    const actionFormatter = id =>{
+        return <Button  color="primary" className="btn-sm" onClick={() => props.history.replace(`/user/profile/${id}`)}>Editar</Button>;
+    };
+
     /**=====================
      *  Datatable option
      * @type {{searchDelayTime: number,
@@ -243,12 +247,12 @@ const Users = props => {
                                            filter={ { type: 'SelectFilter', options: groups}}
                                            width="150" dataFormat={GroupFormatter}>Grupo</TableHeaderColumn>
                         <TableHeaderColumn dataField="sms" width="150"
-                                           dataFormat={boolFormatter}>SMS(alert)</TableHeaderColumn>
+                                           dataFormat={boolFormatter}>SMS(alerta)</TableHeaderColumn>
                         <TableHeaderColumn dataField="whatsAppMessage" dataSort
-                                           width="150" dataFormat={boolFormatter}>WhatsApp(alert)</TableHeaderColumn>
+                                           width="150" dataFormat={boolFormatter}>WhatsApp(alerta)</TableHeaderColumn>
                         <TableHeaderColumn dataField="mail" width="150"
-                                           dataFormat={boolFormatter}>Email(alert)</TableHeaderColumn>
-                        <TableHeaderColumn dataField='_id' isKey={true} hidden={true}>_id</TableHeaderColumn>
+                                           dataFormat={boolFormatter}>Email(alerta)</TableHeaderColumn>
+                        <TableHeaderColumn dataField='_id' isKey={true} dataFormat={actionFormatter} width="100">Açao</TableHeaderColumn>
                     </BootstrapTable>
                 </CardBody>
             </Card>
