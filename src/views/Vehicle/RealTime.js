@@ -62,7 +62,7 @@ const RealTime = props => {
     };
 
     useEffect(() =>{
-        const socket = io('http://localhost:5000',{
+        const socket = io(process.env.SOCKET_SERVER,{
             enableLogging: true,
             upgrade: false
         });
