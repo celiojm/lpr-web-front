@@ -160,7 +160,7 @@ const  CreateCamera = props => {
                 <Col md={4}>
                     <Card>
                         <CardHeader>
-                            <i className="fa fa-video-camera"/><strong>Add Camera</strong>
+                            <i className="fa fa-video-camera"/><strong>Criar Câmera</strong>
                         </CardHeader>
                         <CardBody>
                             <hr />
@@ -188,7 +188,7 @@ const  CreateCamera = props => {
                                                         <Input type="text"
                                                                name="id"
                                                                id="id"
-                                                               placeholder="Camera Id"
+                                                               placeholder="Câmera Id"
                                                                autoComplete="id"
                                                                valid={!errors.id}
                                                                invalid={touched.id && !!errors.id}
@@ -202,7 +202,7 @@ const  CreateCamera = props => {
                                                         <Input type="text"
                                                                name="model"
                                                                id="model"
-                                                               placeholder="Camera Model"
+                                                               placeholder="Câmera Modelo"
                                                                valid={!errors.model}
                                                                invalid={touched.model && !!errors.model}
                                                                required
@@ -215,7 +215,7 @@ const  CreateCamera = props => {
                                                         <Input type="text"
                                                                name="brand"
                                                                id="brand"
-                                                               placeholder="Camera Brand"
+                                                               placeholder="Câmera Marca"
                                                                valid={!errors.brand}
                                                                invalid={touched.brand && !!errors.brand}
                                                                required
@@ -256,7 +256,7 @@ const  CreateCamera = props => {
                                                         <Input type="text"
                                                                name="street"
                                                                id="street"
-                                                               placeholder="Street"
+                                                               placeholder="Rua"
                                                                valid={!errors.street}
                                                                invalid={touched.street && !!errors.street}
                                                                required
@@ -269,7 +269,7 @@ const  CreateCamera = props => {
                                                         <Input type="text"
                                                                name="neighborhood"
                                                                id="neighborhood"
-                                                               placeholder="Neighborhood"
+                                                               placeholder="Vizinhança"
                                                                valid={!errors.neighborhood}
                                                                invalid={touched.neighborhood && !!errors.neighborhood}
                                                                required
@@ -282,7 +282,7 @@ const  CreateCamera = props => {
                                                         <Input type="text"
                                                                name="serialNumber"
                                                                id="serialNumber"
-                                                               placeholder="Serial Number"
+                                                               placeholder="Número de série"
                                                                valid={!errors.serialNumber}
                                                                invalid={touched.serialNumber && !!errors.serialNumber}
                                                                required
@@ -295,7 +295,7 @@ const  CreateCamera = props => {
                                                         <Select
                                                             name="station"
                                                             id="station"
-                                                            placeholder="Station"
+                                                            placeholder="Estação"
                                                             value={station}
                                                             options={stations}
                                                             onBlur={handleBlur}
@@ -309,7 +309,7 @@ const  CreateCamera = props => {
                                                             id="city"
                                                             value={city}
                                                             options={cities}
-                                                            placeholder="City"
+                                                            placeholder="Cidade"
                                                             onBlur={handleBlur}
                                                             onChange={setCity}
                                                             style={{textAlign:'left'}}
@@ -320,7 +320,7 @@ const  CreateCamera = props => {
                                                         <Input type="text"
                                                                name="note"
                                                                id="note"
-                                                               placeholder="Note"
+                                                               placeholder="Nota"
                                                                required
                                                                onChange={handleChange}
                                                                onBlur={handleBlur}
@@ -330,7 +330,7 @@ const  CreateCamera = props => {
                                                         <Button type="submit" color="primary"
                                                                 className="mr-1"
                                                                 disabled={isSubmitting || !isValid}>
-                                                            {isSubmitting ? 'Wait...' : 'Create'}
+                                                            {isSubmitting ? 'Esperar...' : 'Criar'}
                                                         </Button>
                                                     </FormGroup>
                                                 </Form>

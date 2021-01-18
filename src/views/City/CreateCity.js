@@ -20,10 +20,10 @@ import Services from '../../Services';
 const validationSchema = function (values) {
     return Yup.object().shape({
         city: Yup.string()
-            .min(4, `City has to be at least 2 characters`)
-            .required('City is required'),
+            .min(4, `A cidade deve ter pelo menos 4 caracteres`)
+            .required('Cidade é necessária'),
         state: Yup.string()
-            .required('State is required'),
+            .required('Estadual é obrigatório'),
     })
 };
 
@@ -61,7 +61,7 @@ const  CreateCity = props => {
         Services.CityService.create(values)
             .then(res =>{
                 if(res.success){
-                    toast.success("Successfully created!");
+                    toast.success("Criado com sucesso!");
                     props.history.replace('/city/all');
                 }else {
                    setErrors({state: res.errorMsg});
@@ -78,7 +78,7 @@ const  CreateCity = props => {
                 <Col md={4} className="text-center">
                     <Card>
                         <CardHeader>
-                            <i className="icon-map"/><strong>Add City</strong>
+                            <i className="icon-map"/><strong>Criar Cidade</strong>
                         </CardHeader>
                         <CardBody>
                             <hr />
@@ -106,7 +106,7 @@ const  CreateCity = props => {
                                                         <Input type="text"
                                                                name="city"
                                                                id="city"
-                                                               placeholder="City"
+                                                               placeholder="Cidade"
                                                                autoComplete="city"
                                                                valid={!errors.city}
                                                                invalid={touched.city && !!errors.city}
@@ -120,7 +120,7 @@ const  CreateCity = props => {
                                                         <Input type="text"
                                                                name="state"
                                                                id="state"
-                                                               placeholder="State"
+                                                               placeholder="Estadual"
                                                                autoComplete="state"
                                                                valid={!errors.state}
                                                                invalid={touched.state && !!errors.state}
@@ -131,7 +131,7 @@ const  CreateCity = props => {
                                                         <FormFeedback>{errors.state}</FormFeedback>
                                                     </FormGroup>
                                                     <FormGroup>
-                                                        <Button type="submit" color="primary" className="mr-1" disabled={isSubmitting || !isValid}>{isSubmitting ? 'Wait...' : 'Create'}</Button>
+                                                        <Button type="submit" color="primary" className="mr-1" disabled={isSubmitting || !isValid}>{isSubmitting ? 'Esperar...' : 'Criar'}</Button>
                                                     </FormGroup>
                                                 </Form>
                                             </Col>

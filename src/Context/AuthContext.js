@@ -6,15 +6,12 @@ export const AuthContext = createContext();
 export default ({children}) =>{
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    // eslint-disable-next-line
-    const [isLoaded, setIsLoaded] = useState(true);
 
     useEffect(() =>{
         Services.AuthService.isAuthenticated()
             .then(data =>{
                 setUser(data.user);
                 setIsAuthenticated(data.isAuthenticated);
-                setIsLoaded(true);
             })
     },[]);
 

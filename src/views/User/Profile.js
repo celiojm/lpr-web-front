@@ -52,10 +52,10 @@ const validationSchema = function (values) {
             .email('Email inválido'),
         whatsApp: Yup.string()
             .required('Whatsapp é necessário')
-            .matches(/^\(11\) 9\d{4}-\d{4}|\((?:1[2-9]|[2-9]\d)\) [5-9]\d{3}-\d{4}$/, 'Número de Whatsapp inválido'),
+            .matches(/\((?:1[2-9]|[2-9]\d)\) [5-9]\d{8}$/, 'Número de Whatsapp inválido'),
         mobile: Yup.string()
             .required('Celular é necessário')
-            .matches(/^\(11\) 9\d{4}-\d{4}|\((?:1[2-9]|[2-9]\d)\) [5-9]\d{3}-\d{4}$/, 'Número de celular inválido'),
+            .matches(/\((?:1[2-9]|[2-9]\d)\) [5-9]\d{8}$/, 'Número de celular inválido'),
         role: Yup.string()
             .required('Função é necessário'),
     })
@@ -85,7 +85,7 @@ const getErrorsFromValidationError = (validationError) => {
 
 const mobileFormatter = mobile =>{
    let removedPrefix = '(' + mobile.substring(3);
-   return removedPrefix.substring(0, 3) + ') ' + removedPrefix.substring(3,7) + '-' + removedPrefix.substring(7);
+   return removedPrefix.substring(0, 3) + ') ' + removedPrefix.substring(3);
 };
 
 let initialValues = null;
@@ -156,8 +156,8 @@ const  Profile = props => {
     const onSubmit = async (values, { setSubmitting, setErrors })  =>{
         let params = {...values};
         params.permissions = permission.map(a => a.value);
-        params.whatsApp = "+55" + params.whatsApp.replace(/[()]/g,'').replace(/\s/g, '').replace(/-/g, "");
-        params.mobile = "+55" + params.mobile.replace(/[()]/g,'').replace(/\s/g, '').replace(/-/g, "");
+        params.whatsApp = "+55" + params.whatsApp.replace(/[()]/g,'').replace(/\s/g, '');
+        params.mobile = "+55" + params.mobile.replace(/[()]/g,'').replace(/\s/g, '');
 
         Services.AuthService.update(id, params)
             .then(res =>{
@@ -375,7 +375,7 @@ const  Profile = props => {
                                     <FormGroup className="text-center">
                                         <Button type="submit" color="primary"
                                                 className="mr-1" disabled={isSubmitting || !isValid}>
-                                            {isSubmitting ? 'Wait...' : 'Create'}</Button>
+                                            {isSubmitting ? 'Esperar...' : 'Atualizar'}</Button>
                                     </FormGroup>
                                 </Form>
                             </Col>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Card, CardHeader, CardBody, Button} from 'reactstrap';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import 'react-bootstrap-table/dist//react-bootstrap-table-all.min.css';
@@ -109,6 +109,25 @@ const Vehicles = props => {
         setParams(tmp);
     };
 
+    const onHover = (row, event) =>{
+        let elem = event.target;
+        if(elem.tagName === 'TD'){
+            let tabIndex = elem.getAttribute('tabindex');
+            if (tabIndex === '1') {
+                openPopUp(row.vehicleImg, 'vehicle');
+            }else if(tabIndex === '2'){
+                openPopUp(row.plateImg, 'plate')
+            }
+        }
+    };
+
+    const onLeave = (row, event) =>{
+        let elem = event.target;
+        if(elem.tagName === 'TD'){
+            setPopOver(false)
+        }
+    };
+
     /**=====================
      *  Datatable option
      * @type {{searchDelayTime: number,
@@ -140,7 +159,9 @@ const Vehicles = props => {
         onSizePerPageList: onSizePerPageList,
         onSortChange: onSortChange,
         onFilterChange: onFilterChange,
-        noDataText: "Não há dados"
+        noDataText: "Não há dados",
+        onRowMouseOver: onHover,
+        onRowMouseOut: onLeave
     };
 
     const alertFormatter = alert =>{
@@ -153,22 +174,14 @@ const Vehicles = props => {
 
     const openPopUp = (img, path) =>{
         setPopup({
-            imgName: img,
+            imgName: path,
             imgUrl: `${path}/${img}`
         });
         setPopOver(true);
     };
 
-    const vehicleImgFormatter = img =>{
-        return <span onMouseEnter={() =>openPopUp(img, 'vehicle')} onMouseLeave={() => setPopOver(false)}>{img}</span>
-    };
-
-    const licenseImgFormatter = img =>{
-        return <span onMouseEnter={() =>openPopUp(img, 'plate')} onMouseLeave={() => setPopOver(false)}>{img}</span>
-    };
-
     const idFormatter = id =>{
-        return <Button color="primary" onClick={() => props.history.push(`/vehicle/detail/${id}`)}>View detail</Button>
+        return <Button color="primary" onClick={() => props.history.push(`/vehicle/detail/${id}`)}>Ver Detalhes</Button>
     };
 
     return (
@@ -183,7 +196,6 @@ const Vehicles = props => {
                         data={vehicles}
                         version="4"
                         striped
-                        hover
                         pagination={true}
                         fetchInfo={{dataTotalSize: dataTotalSize}}
                         options={options}>
@@ -199,18 +211,19 @@ const Vehicles = props => {
                                            filter={ { type: 'SelectFilter', options: colors}}>Cor</TableHeaderColumn>
                         <TableHeaderColumn dataField='date' dataSort editable={false} width="100">Tâmara</TableHeaderColumn>
                         <TableHeaderColumn dataField='time' dataSort editable={false} width="100">Tempo</TableHeaderColumn>
-                        <TableHeaderColumn dataField='vehicleImg' dataSort editable={false} width="200" dataFormat={vehicleImgFormatter}>Imagem do veículo</TableHeaderColumn>
-                        <TableHeaderColumn dataField='plateImg' dataSort editable={false} width="200" dataFormat={licenseImgFormatter}>Imagem de licença</TableHeaderColumn>
-                        <TableHeaderColumn dataField='_id' isKey={true} dataFormat={idFormatter} width="150">Action</TableHeaderColumn>
+                        <TableHeaderColumn dataField='_id' isKey={true} dataFormat={idFormatter} width="150">Açao</TableHeaderColumn>
                     </BootstrapTable>
                 </CardBody>
-                <div style={{position: 'absolute', display: popover?"block":"none"}}>
+                <div style={{position: 'absolute', display: popover?"block":"none", right: '0'}}>
                     <Card>
                         <CardHeader>
                             {popup.imgName}
                         </CardHeader>
                         <CardBody>
-                            <img src={`${process.env.REACT_APP_STORAGE_URL}/${popup.imgUrl}`} alt={popup.imgName}/>
+                            <img
+                                style={{maxWidth: '400px'}}
+                                src={`${process.env.REACT_APP_STORAGE_URL}/${popup.imgUrl}`}
+                                alt={popup.imgName}/>
                         </CardBody>
                     </Card>
                 </div>

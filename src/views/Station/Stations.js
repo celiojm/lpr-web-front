@@ -79,11 +79,11 @@ const Stations = props =>  {
             if(row[cellName] === cellValue) return false;
         }
 
-        let userInput = window.confirm(`Are you really want to save field "${cellName}" as "${label}"?`);
+        let userInput = window.confirm(`Tem certeza de que deseja salvar o campo "${cellName}" como "${label}"?`);
         if(userInput)
             Services.StationService.update({id: row._id, query: {[cellName]: value}}).then(res =>{
                 if(res.success){
-                    toast.success('Successfully updated');
+                    toast.success('Atualizado com sucesso');
                     return true;
                 }else{
                     toast.warn(res.errorMsg);
@@ -134,7 +134,7 @@ const Stations = props =>  {
         <div className="animated">
             <Card>
                 <CardHeader>
-                    <i className="icon-menu"/>Stations
+                    <i className="icon-menu"/>Estaçãos
                 </CardHeader>
                 <CardBody>
                     <BootstrapTable
@@ -156,13 +156,13 @@ const Stations = props =>  {
                         <TableHeaderColumn  dataField="city" dataFormat={CityFormatter}
                                             dataSort sortFunc={citySort} width="200"
                                             filter={{type:'TextFilter'}} filterFormatted
-                                            customEditor={ { getElement: createCityEditor, customEditorParameters: { cities: cities}}}>City</TableHeaderColumn>
+                                            customEditor={ { getElement: createCityEditor, customEditorParameters: { cities: cities}}}>Cidade</TableHeaderColumn>
                         <TableHeaderColumn dataField="createdAt" dataFormat={DateFormatter}
                                            dataSort editable={false} filter={{type:'TextFilter'}}
-                                           filterFormatted width="200">Created</TableHeaderColumn>
+                                           filterFormatted width="200">Criado</TableHeaderColumn>
                         <TableHeaderColumn dataField="updatedAt" dataFormat={DateFormatter}
                                            dataSort editable={false} filter={{type:'TextFilter'}}
-                                           filterFormatted width="200">Updated</TableHeaderColumn>
+                                           filterFormatted width="200">Atualizado</TableHeaderColumn>
                         <TableHeaderColumn dataField='_id' isKey={true} hidden={true}>Action</TableHeaderColumn>
                     </BootstrapTable>
                 </CardBody>
@@ -215,12 +215,12 @@ class CityEditor extends React.Component {
                 <button
                     className='btn-info btn-xs'
                     onClick={ this.updateData }>
-                    save
+                    Salve
                 </button>
                 <button
                     className='btn-info btn-xs'
                     onClick={ () =>this.props.onUpdate(null) }>
-                    cancel
+                    cancelar
                 </button>
             </div>
         );

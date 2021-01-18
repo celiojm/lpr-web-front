@@ -88,7 +88,7 @@ const Cameras = props => {
                         return cameraIds.indexOf(camera._id) === -1;
                     });
                     setCameras(newCams);
-                    toast.success(`Successfully deleted ${res.count} cameras.`);
+                    toast.success(`Excluiu ${res.count} câmeras com sucesso.`);
                 }
                 else{
                     toast.warn(res.errorMsg);
@@ -268,7 +268,7 @@ const Cameras = props => {
             newProperty = cellValue;
             if(row[cellName] === cellValue) return false;
         }
-        let userInput = window.confirm(`Are you really want to save field "${cellName}" as "${label}"?`);
+        let userInput = window.confirm(`Tem certeza de que deseja salvar o campo "${cellName}" como "${label}"?`);
         if(userInput)
             Services.CameraService.update({id: row._id, query: {[cellName]: value}}).then(res =>{
                 if(res.success){
@@ -276,7 +276,7 @@ const Cameras = props => {
                     let index = cam.findIndex((element)=> element._id === row._id);
                     cam[index][cellName] = newProperty;
                     setCameras(cam);
-                    toast.success('Successfully updated');
+                    toast.success('Atualizado com sucesso');
                     return true;
                 }else{
                     toast.warn(res.errorMsg);
@@ -289,7 +289,7 @@ const Cameras = props => {
         <div className="animated">
             <Card>
                 <CardHeader>
-                    <i className="icon-menu"/>Stations
+                    <i className="icon-menu"/>Câmeras
                 </CardHeader>
                 <CardBody>
                     <BootstrapTable
@@ -310,21 +310,21 @@ const Cameras = props => {
                         deleteRow={true}>
 
                         <TableHeaderColumn dataField="cameraId" dataSort filter={{type:'TextFilter'}} editable={false} width="150">Id</TableHeaderColumn>
-                        <TableHeaderColumn dataField="model" dataSort filter={{type:'TextFilter'}} width="150">Model</TableHeaderColumn>
-                        <TableHeaderColumn dataField="brand" dataSort filter={{type:'TextFilter'}} width="150">Brand</TableHeaderColumn>
+                        <TableHeaderColumn dataField="model" dataSort filter={{type:'TextFilter'}} width="150">Modelo</TableHeaderColumn>
+                        <TableHeaderColumn dataField="brand" dataSort filter={{type:'TextFilter'}} width="150">Marca</TableHeaderColumn>
                         <TableHeaderColumn dataField='station'
                                            dataSort sortFunc={stationSort} width="150"
                                            dataFormat={StationFormatter} filterFormatted
                                            customEditor={ { getElement: createStationEditor, customEditorParameters: { stations: stations}}}
-                                            filter={ { type: 'SelectFilter', options: stationsForFilter } }>Station</TableHeaderColumn>
+                                            filter={ { type: 'SelectFilter', options: stationsForFilter } }>Estação</TableHeaderColumn>
 
                         <TableHeaderColumn  dataField="city" dataSort sortFunc={citySort}
                                             dataFormat={CityFormatter} filterFormatted
                                             filter={ { type: 'SelectFilter', options: citiesForFilter }}
-                                            customEditor={ { getElement: createCityEditor, customEditorParameters: { cities: cities}} } width="200">City</TableHeaderColumn>
+                                            customEditor={ { getElement: createCityEditor, customEditorParameters: { cities: cities}} } width="200">Cidade</TableHeaderColumn>
                         <TableHeaderColumn  dataField="street" dataSort filter={{type:'TextFilter'}} width="150">Street</TableHeaderColumn>
-                        <TableHeaderColumn  dataField="neighborhood" dataSort filter={{type:'TextFilter'}} width="150">Neighborhood</TableHeaderColumn>
-                        <TableHeaderColumn  dataField="serialNumber" dataSort filter={{type:'TextFilter'}} width="200">Serial Number</TableHeaderColumn>
+                        <TableHeaderColumn  dataField="neighborhood" dataSort filter={{type:'TextFilter'}} width="150">Vizinhança</TableHeaderColumn>
+                        <TableHeaderColumn  dataField="serialNumber" dataSort filter={{type:'TextFilter'}} width="200">Número de série</TableHeaderColumn>
                         <TableHeaderColumn dataField='_id' isKey={true} hidden={true}>_id</TableHeaderColumn>
                     </BootstrapTable>
                 </CardBody>

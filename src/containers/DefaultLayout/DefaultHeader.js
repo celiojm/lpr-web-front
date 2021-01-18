@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React, { useContext} from 'react';
 import { Nav } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-import { AppAsideToggler, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
+import {AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import DefaultHeaderDropdown  from './DefaultHeaderDropdown'
 import logo from '../../assets/img/brand/logo.svg'
 import sygnet from '../../assets/img/brand/sygnet.svg'
+import Context from "../../Context";
 
 const propTypes = {
     children: PropTypes.node,
@@ -13,29 +14,25 @@ const propTypes = {
 
 const defaultProps = {};
 
-class DefaultHeader extends Component {
-    render() {
+const DefaultHeader = props => {
+    const {user} = useContext(Context.AuthContext);
 
-        return (
-            <React.Fragment>
-                <AppSidebarToggler className="d-lg-none" display="md" mobile />
-                <AppNavbarBrand
-                    full={{ src: logo, width: 89, height: 25, alt: 'CoreUI Logo' }}
-                    minimized={{ src: sygnet, width: 30, height: 30, alt: 'CoreUI Logo' }}
-                />
-                <AppSidebarToggler className="d-md-down-none" display="lg" />
-                <Nav className="ml-auto" navbar>
-                    <DefaultHeaderDropdown notif/>
-                    <DefaultHeaderDropdown tasks/>
-                    <DefaultHeaderDropdown mssgs/>
-                    <DefaultHeaderDropdown onLogout={this.props.onLogout} accnt/>
-                </Nav>
-                <AppAsideToggler className="d-md-down-none" />
-                <AppAsideToggler className="d-lg-none" mobile />
-            </React.Fragment>
-        );
-    }
-}
+    return (
+        <React.Fragment>
+            <AppSidebarToggler className="d-lg-none" display="md" mobile />
+            <AppNavbarBrand
+                full={{ src: logo, width: 89, height: 25, alt: 'CoreUI Logo' }}
+                minimized={{ src: sygnet, width: 30, height: 30, alt: 'CoreUI Logo' }}
+            />
+            <AppSidebarToggler className="d-md-down-none" display="lg" />
+            <Nav className="ml-auto" navbar>
+                <DefaultHeaderDropdown notif/>
+                <DefaultHeaderDropdown onLogout={props.onLogout} accnt user={user} history={props.history}/>
+            </Nav>
+            <div style={{width: '20px'}}/>
+        </React.Fragment>
+    );
+};
 
 DefaultHeader.propTypes = propTypes;
 DefaultHeader.defaultProps = defaultProps;

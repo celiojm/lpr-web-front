@@ -52,7 +52,7 @@ const Cities = props =>  {
     const onAfterSaveCell =(row, cellName, cellValue) =>{
         Services.CityService.update(row).then(res =>{
             if(res.success){
-                toast.success('Successfully updated');
+                toast.success('Atualizado com sucesso');
             }else{
                 toast.warn(res.errorMsg);
             }
@@ -61,7 +61,7 @@ const Cities = props =>  {
     };
 
     const onBeforeSaveCell = (row, cellName, cellValue) => {
-        return window.confirm(`Are you really want to save cell "${cellName}" with value "${cellValue}"?`);
+        return window.confirm(`Tem certeza que deseja salvar a célula "${cellName}" com o valor "${cellValue}"?`);
     };
 
     const DateFormatter = (props) =>{
@@ -73,7 +73,7 @@ const Cities = props =>  {
             <div className="animated">
                 <Card>
                     <CardHeader>
-                        <i className="icon-menu"/>Cities
+                        <i className="icon-menu"/>Cidades
                     </CardHeader>
                     <CardBody>
                         <BootstrapTable
@@ -92,10 +92,10 @@ const Cities = props =>  {
                                 beforeSaveCell: onBeforeSaveCell,
                                 afterSaveCell: onAfterSaveCell,
                             }}>
-                            <TableHeaderColumn dataField="city" dataSort width="200">City</TableHeaderColumn>
-                            <TableHeaderColumn  dataField="state" width="200">State</TableHeaderColumn>
-                            <TableHeaderColumn dataField="createdAt" dataFormat={DateFormatter} dataSort editable={false} width="200">Created</TableHeaderColumn>
-                            <TableHeaderColumn dataField="updatedAt" dataFormat={DateFormatter} dataSort editable={false} width="200">Updated</TableHeaderColumn>
+                            <TableHeaderColumn dataField="city" dataSort width="200">Cidade</TableHeaderColumn>
+                            <TableHeaderColumn  dataField="state" width="200">Estadual</TableHeaderColumn>
+                            <TableHeaderColumn dataField="createdAt" dataFormat={DateFormatter} dataSort editable={false} width="200">Criado</TableHeaderColumn>
+                            <TableHeaderColumn dataField="updatedAt" dataFormat={DateFormatter} dataSort editable={false} width="200">Atualizado</TableHeaderColumn>
                             <TableHeaderColumn dataField='_id' isKey={true} hidden={true}>Action</TableHeaderColumn>
                         </BootstrapTable>
                     </CardBody>

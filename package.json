@@ -59,6 +59,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "simple-line-icons": "^2.4.1",
+    "socket.io-client": "^3.1.0",
     "spinkit": "1.2.5",
     "validator-brazil": "^1.2.2",
     "yup": "^0.26.6"
@@ -95,5 +96,5 @@
       "!src/polyfill.js"
     ]
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://10.0.8.70:5000"
 }

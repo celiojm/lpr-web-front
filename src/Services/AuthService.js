@@ -21,7 +21,12 @@ const create = user =>{
 };
 
 const logout = () =>{
-    return fetch('/user/logout')
+    return fetch('/user/logout',{
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
         .then(res => res.json())
         .then(data => data);
 };

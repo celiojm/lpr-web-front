@@ -43,9 +43,20 @@ const deleteCameras = cameraIds =>{
         .then(data => data);
 };
 
+const fetchC = () =>{
+    return fetch('/camera/fetch', {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res =>res.json())
+        .then(data => data);
+};
+
 export default {
     create:create,
     fetchAll: fetchAll,
     update: update,
-    deleteCameras: deleteCameras
+    deleteCameras: deleteCameras,
+    fetch: fetchC
 }

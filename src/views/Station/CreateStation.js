@@ -21,7 +21,7 @@ import Services from '../../Services';
 const validationSchema = function (values) {
     return Yup.object().shape({
         id: Yup.string()
-            .required('Station id is required'),
+            .required('O id da estação é obrigatório'),
 
     })
 };
@@ -83,12 +83,12 @@ const  CreateStation = props => {
     const onSubmit = async (values, { setSubmitting, setErrors })  =>{
         if(!option){
             setSubmitting(false);
-            return toast.warn("City is required");
+            return toast.warn("Cidade é necessária");
         }
         Services.StationService.create({id:values.id, city: option.value})
             .then(res =>{
                 if(res.success){
-                    toast.success("Success!");
+                    toast.success("Criado com sucesso!");
                     props.history.replace('/station/all');
                 }
                 else{
@@ -108,7 +108,7 @@ const  CreateStation = props => {
                 <Col md={4}>
                     <Card>
                         <CardHeader>
-                            <i className="fa fa-video-camera"/><strong>Add Station</strong>
+                            <i className="fa fa-map-pin"/><strong>Criar Estação</strong>
                         </CardHeader>
                         <CardBody>
                             <hr />
@@ -136,7 +136,7 @@ const  CreateStation = props => {
                                                         <Input type="text"
                                                                name="id"
                                                                id="id"
-                                                               placeholder="Station Id"
+                                                               placeholder="Estação Id"
                                                                valid={!errors.id}
                                                                invalid={touched.id && !!errors.id}
                                                                required
@@ -164,7 +164,7 @@ const  CreateStation = props => {
                                                         <Button type="submit" color="primary"
                                                                 className="mr-1"
                                                                 disabled={isSubmitting || !isValid}>
-                                                            {isSubmitting ? 'Wait...' : 'Create'}
+                                                            {isSubmitting ? 'Esperar...' : 'Criar'}
                                                             </Button>
                                                     </FormGroup>
                                                 </Form>

@@ -157,7 +157,7 @@ const  CreateAlert = props => {
                                                         <Button type="submit" color="primary"
                                                                 className="mr-1"
                                                                 disabled={isSubmitting || !isValid}>
-                                                            {isSubmitting ? 'Wait...' : 'Create'}
+                                                            {isSubmitting ? 'Esperar...' : 'Criar'}
                                                         </Button>
                                                     </FormGroup>
                                                 </Form>

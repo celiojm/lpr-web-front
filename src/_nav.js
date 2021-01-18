@@ -6,71 +6,71 @@ export const adminNav = {
           icon: 'icon-speedometer',
       },
       {
-          name: 'User',
+          name: 'Usuário',
           icon: 'icon-user',
           children: [
               {
-                  name: 'New User',
+                  name: 'Novo usuário',
                   url: '/user/create',
               },
               {
-                  name: 'Users',
+                  name: 'Usuários',
                   url: '/user/all',
               }
           ],
       },
       {
-          name: 'City',
+          name: 'Cidade',
           icon: 'icon-map',
           children: [
               {
-                  name: 'New City',
+                  name: 'Novo Cidade',
                   url: '/city/create',
               },
               {
-                  name: 'Cities',
+                  name: 'Cidades',
                   url: '/city/all',
               }
           ],
       },
       {
-          name: 'Station',
+          name: 'Estação',
           icon: 'fa fa-map-pin',
           children: [
               {
-                  name: 'New Station',
+                  name: 'Novo Estação',
                   url: '/station/create',
               },
               {
-                  name: 'Stations',
+                  name: 'Estaçãos',
                   url: '/station/all',
               }
           ],
       },
       {
-          name: 'Camera',
+          name: 'Câmera',
           icon: 'fa fa-video-camera',
           children: [
               {
-                  name: 'New Camera',
+                  name: 'Novo Câmera',
                   url: '/camera/create',
               },
               {
-                  name: 'Cameras',
+                  name: 'Câmeras',
                   url: '/camera/all',
               }
           ],
       },
       {
-          name: 'Alert',
+          name: 'Alerta',
           icon: 'icon-bell',
           children: [
               {
-                  name: 'New Alert',
+                  name: 'Novo Alerta',
                   url: '/alert/create',
               },
               {
-                  name: 'Alerts',
+                  name: 'Alertas',
                   url: '/alert/all',
               }
           ],
@@ -79,6 +79,11 @@ export const adminNav = {
           name: 'Veículos',
           url: '/vehicle/all',
           icon: 'fa fa-automobile',
+      },
+      {
+          name: 'Tempo Real',
+          url: '/realtime',
+          icon: 'icon-feed',
       },
   ]
 };

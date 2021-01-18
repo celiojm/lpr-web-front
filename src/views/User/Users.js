@@ -208,17 +208,6 @@ const Users = props => {
         onFilterChange: onFilterChange,
     };
 
-    /**============================
-     *  Confirm cell edit
-     * @param row: whole row data
-     * @param cellName: field name
-     * @param cellValue: new value
-     * @returns {boolean}
-     */
-    const onBeforeSaveCell = (row, cellName, cellValue) => {
-
-    };
-
     return (
         <div className="animated">
             <Card>
@@ -232,40 +221,32 @@ const Users = props => {
                         version="4"
                         striped
                         hover
-                        cellEdit={{
-                            mode: 'dbclick',
-                            blurToSave: true,
-                            beforeSaveCell: onBeforeSaveCell
-                        }}
                         pagination={true}
                         fetchInfo={{dataTotalSize: dataTotalSize}}
                         options={options}
                         selectRow={{mode: 'checkbox'}}
                         deleteRow={true}>
 
-                        <TableHeaderColumn dataField="name" dataSort filter={{type:'TextFilter'}} editable={false} width="150">Nome</TableHeaderColumn>
-                        <TableHeaderColumn dataField="cpf" dataSort filter={{type:'TextFilter'}} editable={false} width="150">CPF</TableHeaderColumn>
-                        <TableHeaderColumn dataField="organization" dataSort filter={{type:'TextFilter'}} editable={false} width="200">Organização</TableHeaderColumn>
-                        <TableHeaderColumn dataField="email" dataSort filter={{type:'TextFilter'}} editable={false} width="200">Email</TableHeaderColumn>
-                        <TableHeaderColumn dataField="whatsApp" dataSort filter={{type:'TextFilter'}} editable={false}>WhatsApp</TableHeaderColumn>
-                        <TableHeaderColumn dataField="mobile" dataSort filter={{type:'TextFilter'}} editable={false} width="150">Móvel</TableHeaderColumn>
-                        <TableHeaderColumn dataField="role" dataSort filter={{type:'TextFilter'}} editable={false} width="150">Função</TableHeaderColumn>
+                        <TableHeaderColumn dataField="name" dataSort filter={{type:'TextFilter'}} width="150">Nome</TableHeaderColumn>
+                        <TableHeaderColumn dataField="cpf" dataSort filter={{type:'TextFilter'}} width="150">CPF</TableHeaderColumn>
+                        <TableHeaderColumn dataField="organization" dataSort filter={{type:'TextFilter'}} width="200">Organização</TableHeaderColumn>
+                        <TableHeaderColumn dataField="email" dataSort filter={{type:'TextFilter'}} width="200">Email</TableHeaderColumn>
+                        <TableHeaderColumn dataField="whatsApp" dataSort filter={{type:'TextFilter'}}>WhatsApp</TableHeaderColumn>
+                        <TableHeaderColumn dataField="mobile" dataSort filter={{type:'TextFilter'}} width="150">Móvel</TableHeaderColumn>
+                        <TableHeaderColumn dataField="role" dataSort filter={{type:'TextFilter'}} width="150">Função</TableHeaderColumn>
                         <TableHeaderColumn dataField="city" dataSort
                                            sortFunc={citySort}
                                            filter={ { type: 'SelectFilter', options: cities}}
-                                           editable={false} width="200"
-                                           dataFormat={CityFormatter} filterFormatted>Cidade</TableHeaderColumn>
+                                           width="200" dataFormat={CityFormatter} filterFormatted>Cidade</TableHeaderColumn>
                         <TableHeaderColumn dataField="group" dataSort
                                            sortFunc={groupSort}
                                            filter={ { type: 'SelectFilter', options: groups}}
-                                           editable={false} width="150" dataFormat={GroupFormatter}>Grupo</TableHeaderColumn>
-                        <TableHeaderColumn dataField="sms"
-                                           editable={false} width="150"
+                                           width="150" dataFormat={GroupFormatter}>Grupo</TableHeaderColumn>
+                        <TableHeaderColumn dataField="sms" width="150"
                                            dataFormat={boolFormatter}>SMS(alert)</TableHeaderColumn>
-                        <TableHeaderColumn dataField="whatsAppMessage" dataSort editable={false}
+                        <TableHeaderColumn dataField="whatsAppMessage" dataSort
                                            width="150" dataFormat={boolFormatter}>WhatsApp(alert)</TableHeaderColumn>
-                        <TableHeaderColumn dataField="mail"
-                                           editable={false} width="150"
+                        <TableHeaderColumn dataField="mail" width="150"
                                            dataFormat={boolFormatter}>Email(alert)</TableHeaderColumn>
                         <TableHeaderColumn dataField='_id' isKey={true} hidden={true}>_id</TableHeaderColumn>
                     </BootstrapTable>

@@ -18,6 +18,7 @@ import AppSidebarMinimizer from "@coreui/react/es/SidebarMinimizer";
 import {AdminRoute, UserRoute} from '../../routes';
 import {adminNav} from '../../_nav';
 import Context from "../../Context";
+import Services from "../../Services";
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
@@ -32,7 +33,13 @@ const DefaultLayout = (props) => {
     const loading = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"/></div>;
 
     const signOut = async (e) => {
-        props.history.replace('/');
+        Services.AuthService.logout()
+            .then(data =>{
+                if(data.success){
+                    setUser({});
+                    setIsAuthenticated(false);
+                }
+            });
     };
 
     return (
@@ -40,7 +47,7 @@ const DefaultLayout = (props) => {
             <ToastContainer position="top-right" autoClose={5000} style={{zIndex: 1999}}/>
             <AppHeader fixed>
                 <Suspense fallback={loading()}>
-                    <DefaultHeader onLogout={(event) => signOut(event)}/>
+                    <DefaultHeader onLogout={(event) => signOut(event)} history={props.history}/>
                 </Suspense>
             </AppHeader>
             <div className="app-body">

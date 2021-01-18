@@ -13,9 +13,9 @@ const defaultProps = {
 
 class DefaultHeaderDropdown extends Component {
 
+
   constructor(props) {
     super(props);
-
     this.toggle = this.toggle.bind(this);
     this.state = {
       dropdownOpen: false,
@@ -73,15 +73,12 @@ class DefaultHeaderDropdown extends Component {
     return (
       <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle nav>
-          <span>Username</span>
+          <span>{this.props.user.name}</span>
         </DropdownToggle>
         <DropdownMenu right>
-          <DropdownItem header tag="div" className="text-center"><strong>Account</strong></DropdownItem>
-          <DropdownItem><i className="fa fa-user"/> Profile</DropdownItem>
-          <DropdownItem><i className="fa fa-wrench"/> Settings</DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem><i className="fa fa-shield"/> Lock Account</DropdownItem>
-          <DropdownItem onClick={this.props.onLogout}><i className="fa fa-lock"/> Logout</DropdownItem>
+          <DropdownItem header tag="div" className="text-center"><strong>Conta</strong></DropdownItem>
+          <DropdownItem onClick={() => this.props.history.replace(`/user/profile/${this.props.user._id}`)}><i className="fa fa-user"/> Perfil</DropdownItem>
+          <DropdownItem onClick={this.props.onLogout}><i className="fa fa-lock"/> Sair</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     );

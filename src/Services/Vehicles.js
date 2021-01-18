@@ -19,7 +19,19 @@ const fetchOne = id =>{
         .then(data => data);
 };
 
+const fetchAlert = params =>{
+    return fetch('/vehicle/alert', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+    }).then(res =>res.json())
+        .then(data => data);
+};
+
 export default {
     fetchVehicles: fetchVehicles,
-    fetchOne: fetchOne
+    fetchOne: fetchOne,
+    fetchAlert: fetchAlert
 };
