@@ -159,13 +159,18 @@ const Vehicles = props => {
         onSizePerPageList: onSizePerPageList,
         onSortChange: onSortChange,
         onFilterChange: onFilterChange,
-        noDataText: "Não há dados",
-        onRowMouseOver: onHover,
-        onRowMouseOut: onLeave
+        noDataText: "Não há dados"
     };
 
-    const alertFormatter = alert =>{
-        return <span className={alert === 0?"badge badge-success":"badge badge-danger"}>{alertTypes[alert]}</span>;
+    const licenseFormatter = (license, row) =>{
+        return <span onMouseEnter={() => openPopUp(row.vehicleImg, 'vehicle')}
+                     onMouseLeave={()=>setPopOver(false)}>{license}</span>
+    };
+
+    const alertFormatter = (alert, row) =>{
+        return <span onMouseEnter={() => openPopUp(row.plateImg, 'plate')}
+                     onMouseLeave={()=>setPopOver(false)}
+                     className={alert === 0?"badge badge-success":"badge badge-danger"}>{alertTypes[alert]}</span>;
     };
 
     const colorFormatter = color =>{
@@ -200,7 +205,9 @@ const Vehicles = props => {
                         fetchInfo={{dataTotalSize: dataTotalSize}}
                         options={options}>
 
-                        <TableHeaderColumn dataField="license" dataSort editable={false} width="100" filter={{type:'TextFilter'}}>Licença</TableHeaderColumn>
+                        <TableHeaderColumn dataField="license" dataSort
+                                           editable={false} width="100"
+                                           filter={{type:'TextFilter'}} dataFormat={licenseFormatter}>Licença</TableHeaderColumn>
                         <TableHeaderColumn dataField='alert' dataSort width="150"
                                            editable={false} filter={ { type: 'SelectFilter', options: alertTypes}}
                                            dataFormat={alertFormatter}>Tipo de Alerta</TableHeaderColumn>
