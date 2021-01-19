@@ -77,6 +77,7 @@ class DefaultHeaderDropdown extends Component {
         </DropdownToggle>
         <DropdownMenu right>
           <DropdownItem header tag="div" className="text-center"><strong>Conta</strong></DropdownItem>
+          {/*<DropdownItem onClick={() => this.props.history.replace(`/user/profile/${this.props.user._id}`)}><i className="fa fa-user"/> Perfil</DropdownItem>*/}
           <DropdownItem onClick={this.props.onLogout}><i className="fa fa-lock"/> Sair</DropdownItem>
         </DropdownMenu>
       </Dropdown>

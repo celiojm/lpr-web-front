@@ -20,8 +20,6 @@ import Services from '../../Services';
 
 const validationSchema = function (values) {
     return Yup.object().shape({
-        id: Yup.string()
-            .required('Camera Id is required'),
         model: Yup.string()
             .required('Camera model is required'),
         brand: Yup.string()
@@ -64,7 +62,6 @@ const getErrorsFromValidationError = (validationError) => {
 };
 
 const initialValues = {
-    id: "",
     model:"",
     brand:"",
     latitude:"",
@@ -129,7 +126,6 @@ const  CreateCamera = props => {
             return toast.warn("City is required");
         }
         let camera = {
-            cameraId: values.id,
             brand: values.brand,
             model: values.model,
             location:{
@@ -184,20 +180,6 @@ const  CreateCamera = props => {
                                         <Row>
                                             <Col>
                                                 <Form onSubmit={handleSubmit} noValidate name='simpleForm'>
-                                                    <FormGroup>
-                                                        <Input type="text"
-                                                               name="id"
-                                                               id="id"
-                                                               placeholder="Câmera Id"
-                                                               autoComplete="id"
-                                                               valid={!errors.id}
-                                                               invalid={touched.id && !!errors.id}
-                                                               required
-                                                               onChange={handleChange}
-                                                               onBlur={handleBlur}
-                                                               value={values.id} />
-                                                        <FormFeedback>{errors.id}</FormFeedback>
-                                                    </FormGroup>
                                                     <FormGroup>
                                                         <Input type="text"
                                                                name="model"

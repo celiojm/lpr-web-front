@@ -41,8 +41,9 @@ const VehicleDetail = props => {
     useEffect(() =>{
         Services.VehicleService.fetchOne(id)
             .then(res =>{
-                if(res.success)
-                setResponse(res);
+                if(res.success){
+                    setResponse(res);
+                }
                 else{
                     toast.warn(res.errorMsg);
                 }
@@ -59,10 +60,10 @@ const VehicleDetail = props => {
                 <CardBody>
                     <Row className="mb-4">
                         <Col sm="6">
-                            <div>Cidade: <strong>{res.camera.city.city}-{res.camera.city.state}</strong></div>
-                            <div>Rua: <strong>{res.camera.street}</strong></div>
-                            <div>Estação: <strong>{res.station.id}</strong></div>
-                            <div>Id da câmera: <strong>{res.camera.cameraId}</strong></div>
+                            <div>Cidade: <strong>{res.station?res.station.city.city:''}-{res.station?res.station.city.state:''}</strong></div>
+                            <div>Rua: <strong>{res.camera?res.camera.street : ''}</strong></div>
+                            <div>Estação: <strong>{res.station?res.station.id: ""}</strong></div>
+                            <div>Id da câmera: <strong>{res.camera?res.camera.cameraId : 'Câmera removida'}</strong></div>
                         </Col>
                         <Col sm="6">
                             <div>Licença: <strong>{res.vehicle.license}</strong></div>

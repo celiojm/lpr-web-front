@@ -69,6 +69,7 @@ const Cameras = props => {
             .then(res =>{
                 if(res.success){
                     setCameras(res.cameras);
+                    console.log(res.cameras);//todo
                     setDataTotalSize(res.total);
                 }else{
                     toast.warn(res.errorMsg);
@@ -76,25 +77,25 @@ const Cameras = props => {
             });
     },[params]);
 
-    /** ==========================
-     *  Delete event handler
-     * @param cameraIds: record _id from mongodb
-     */
-    const onDeleteRow = cameraIds =>{
-        Services.CameraService.deleteCameras(cameraIds)
-            .then(res => {
-                if(res.success){
-                    let newCams = cameras.filter(camera =>{
-                        return cameraIds.indexOf(camera._id) === -1;
-                    });
-                    setCameras(newCams);
-                    toast.success(`Excluiu ${res.count} câmeras com sucesso.`);
-                }
-                else{
-                    toast.warn(res.errorMsg);
-                }
-            })
-    };
+    // /** ==========================
+    //  *  Delete event handler
+    //  * @param cameraIds: record _id from mongodb
+    //  */
+    // const onDeleteRow = cameraIds =>{
+    //     Services.CameraService.deleteCameras(cameraIds)
+    //         .then(res => {
+    //             if(res.success){
+    //                 let newCams = cameras.filter(camera =>{
+    //                     return cameraIds.indexOf(camera._id) === -1;
+    //                 });
+    //                 setCameras(newCams);
+    //                 toast.success(`Excluiu ${res.count} câmeras com sucesso.`);
+    //             }
+    //             else{
+    //                 toast.warn(res.errorMsg);
+    //             }
+    //         })
+    // };
 
     /**============================
      *  Page change event handler
@@ -163,7 +164,9 @@ const Cameras = props => {
      * @constructor
      */
     const StationFormatter = station =>{
+        if(station)
         return station.id;
+        else return station;
     };
 
     /**=======================
@@ -224,8 +227,8 @@ const Cameras = props => {
         hidePageListOnlyOnePage: false,
         alwaysShowAllBtns: false,
         withFirstAndLast: false,
-        deleteRow: true,
-        onDeleteRow: onDeleteRow,
+        // deleteRow: true,
+        // onDeleteRow: onDeleteRow,
         onPageChange: onPageChange,
         onSizePerPageList: onSizePerPageList,
         onSortChange: onSortChange,
@@ -305,9 +308,7 @@ const Cameras = props => {
                         }}
                         pagination={true}
                         fetchInfo={{dataTotalSize: dataTotalSize}}
-                        options={options}
-                        selectRow={{mode: 'checkbox'}}
-                        deleteRow={true}>
+                        options={options}>
 
                         <TableHeaderColumn dataField="cameraId" dataSort filter={{type:'TextFilter'}} editable={false} width="150">Id</TableHeaderColumn>
                         <TableHeaderColumn dataField="model" dataSort filter={{type:'TextFilter'}} width="150">Modelo</TableHeaderColumn>

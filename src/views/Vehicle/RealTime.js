@@ -161,7 +161,12 @@ const RealTime = props => {
 
     const cameraFormatter = (a, b) =>{
         let camera = cameras.filter(element => element.cameraId === a && element.station.id === b.station);
-        return camera[0].street;
+        if(camera[0]){
+            return camera[0].street;
+        }else{
+            return 'Câmera removida'
+        }
+
     };
 
     const onRangeChange = event =>{

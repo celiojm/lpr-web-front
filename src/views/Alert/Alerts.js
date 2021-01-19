@@ -41,25 +41,25 @@ const Alerts = props => {
             })
     }, [params]);
 
-    /** ==========================
-     *  Delete event handler
-     * @param alertIds: record _id from mongodb
-     */
-    const onDeleteRow = alertIds =>{
-        Services.AlertService.deleteAlerts(alertIds)
-            .then(res => {
-                if(res.success){
-                    let newAlerts = alerts.filter(camera =>{
-                        return alertIds.indexOf(camera._id) === -1;
-                    });
-                    setAlerts(newAlerts);
-                    toast.success(`${res.count} alertas excluídos com sucesso.`);
-                }
-                else{
-                    toast.warn(res.errorMsg);
-                }
-            })
-    };
+    // /** ==========================
+    //  *  Delete event handler
+    //  * @param alertIds: record _id from mongodb
+    //  */
+    // const onDeleteRow = alertIds =>{
+    //     Services.AlertService.deleteAlerts(alertIds)
+    //         .then(res => {
+    //             if(res.success){
+    //                 let newAlerts = alerts.filter(camera =>{
+    //                     return alertIds.indexOf(camera._id) === -1;
+    //                 });
+    //                 setAlerts(newAlerts);
+    //                 toast.success(`${res.count} alertas excluídos com sucesso.`);
+    //             }
+    //             else{
+    //                 toast.warn(res.errorMsg);
+    //             }
+    //         })
+    // };
 
     /**============================
      *  Page change event handler
@@ -141,8 +141,8 @@ const Alerts = props => {
         hidePageListOnlyOnePage: false,
         alwaysShowAllBtns: false,
         withFirstAndLast: false,
-        deleteRow: true,
-        onDeleteRow: onDeleteRow,
+        // deleteRow: true,
+        // onDeleteRow: onDeleteRow,
         onPageChange: onPageChange,
         onSizePerPageList: onSizePerPageList,
         onSortChange: onSortChange,
@@ -207,9 +207,7 @@ const Alerts = props => {
                         }}
                         pagination={true}
                         fetchInfo={{dataTotalSize: dataTotalSize}}
-                        options={options}
-                        selectRow={{mode: 'checkbox'}}
-                        deleteRow={true}>
+                        options={options}>
 
                         <TableHeaderColumn dataField="plate" dataSort editable={false} width="200">Licença</TableHeaderColumn>
                         <TableHeaderColumn dataField='type' dataSort

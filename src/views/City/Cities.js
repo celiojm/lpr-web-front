@@ -24,18 +24,18 @@ const Cities = props =>  {
             });
     },[]);
 
-    const onDeleteRow = cityIds =>{
-        Services.CityService.deleteCity(cityIds)
-            .then(res => {
-                if(res.success){
-                    let newCities = cities.filter(city =>{
-                        return cityIds.indexOf(city._id) === -1;
-                    });
-                    setCities(newCities);
-                    toast.success(`Excluiu ${res.count} cidades com sucesso`);
-                }
-            })
-    };
+    // const onDeleteRow = cityIds =>{
+    //     Services.CityService.deleteCity(cityIds)
+    //         .then(res => {
+    //             if(res.success){
+    //                 let newCities = cities.filter(city =>{
+    //                     return cityIds.indexOf(city._id) === -1;
+    //                 });
+    //                 setCities(newCities);
+    //                 toast.success(`Excluiu ${res.count} cidades com sucesso`);
+    //             }
+    //         })
+    // };
 
         const options = {
             sortIndicator: true,
@@ -45,8 +45,8 @@ const Cities = props =>  {
             clearSearch: false,
             alwaysShowAllBtns: false,
             withFirstAndLast: false,
-            deleteRow: true,
-            onDeleteRow: onDeleteRow
+            // deleteRow: true,
+            // onDeleteRow: onDeleteRow
         };
 
     const onAfterSaveCell =(row, cellName, cellValue) =>{
@@ -84,8 +84,6 @@ const Cities = props =>  {
                             pagination
                             search
                             options={options}
-                            selectRow={{mode: 'checkbox'} }
-                            deleteRow={true}
                             cellEdit={{
                                 mode: 'dbclick',
                                 blurToSave: true,

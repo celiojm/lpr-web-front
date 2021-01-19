@@ -35,19 +35,19 @@ const Stations = props =>  {
             });
     },[]);
 
-    const onDeleteRow = stations =>{
-        Services.StationService.deleteStation(stations)
-            .then(res => {
-                if(res.success){
-                    toast.success(`Excluiu ${res.count} estação(s) com sucesso`);
-                    return true
-                }
-                else{
-                    toast.warn(res.errorMsg);
-                    return false;
-                }
-            })
-    };
+    // const onDeleteRow = stations =>{
+    //     Services.StationService.deleteStation(stations)
+    //         .then(res => {
+    //             if(res.success){
+    //                 toast.success(`Excluiu ${res.count} estação(s) com sucesso`);
+    //                 return true
+    //             }
+    //             else{
+    //                 toast.warn(res.errorMsg);
+    //                 return false;
+    //             }
+    //         })
+    // };
 
     const options = {
         sortIndicator: true,
@@ -57,8 +57,8 @@ const Stations = props =>  {
         clearSearch: false,
         alwaysShowAllBtns: false,
         withFirstAndLast: false,
-        deleteRow: true,
-        onDeleteRow: onDeleteRow
+        // deleteRow: true,
+        // onDeleteRow: onDeleteRow
     };
 
     /**========================
@@ -144,8 +144,6 @@ const Stations = props =>  {
                         hover
                         pagination
                         options={options}
-                        selectRow={{mode: 'checkbox'}}
-                        deleteRow={true}
                         cellEdit={{
                             mode: 'dbclick',
                             blurToSave: true,

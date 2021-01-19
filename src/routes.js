@@ -43,9 +43,6 @@ export const UserRoute = [
     { path: '/camera/all', name: 'Câmeras', component: Cameras, exact: true },
     { path: '/alert/create', name: 'Criar Alerta', component: CreateAlert, exact: true },
     { path: '/alert/all', name: 'Alertas', component: Alerts, exact: true },
-    {path: '/user/create', name: 'Criar usuário', component: CreateUser, exact: true},
-    {path: '/user/all', name: 'Usuários', component: User, exact: true},
-    {path: '/user/profile/:id', name: 'Perfil', component: Profile},
     {path: '/vehicle/all', name: 'Veículos', component: Vehicles},
     {path: '/vehicle/detail/:id', name: 'Detalhe do veículo', component: VehicleDetail},
     {path: '/realtime', name: 'TEMPO REAL', component: RealTime, exact: true}
