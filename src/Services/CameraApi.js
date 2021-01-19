@@ -53,10 +53,21 @@ const fetchC = () =>{
         .then(data => data);
 };
 
+const count = () =>{
+    return fetch('/camera/count', {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res =>res.json())
+        .then(data => data);
+};
+
 export default {
     create:create,
     fetchAll: fetchAll,
     update: update,
     deleteCameras: deleteCameras,
-    fetch: fetchC
+    fetch: fetchC,
+    count: count
 }

@@ -267,7 +267,7 @@ const  CreateUser = props => {
                                                                value={values.city} >
                                                             <option value="">Selecione a cidade</option>
                                                             {
-                                                                cities.map(city =>(<option key={city._id} value={city._id}>{city.city}</option>))
+                                                                cities.map(city =>(<option key={city._id} value={city._id}>{city.city}-{city.state}</option>))
                                                             }
                                                         </Input>
                                                         <FormFeedback>{errors.city}</FormFeedback>

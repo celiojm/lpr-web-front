@@ -87,6 +87,16 @@ const deleteAlerts = alertIds =>{
         .then(data => data);
 };
 
+const count = () =>{
+    return fetch('/alert/count', {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    }).then(res =>res.json())
+        .then(data => data);
+};
+
 export default {
     createType:createAlertType,
     fetchType: fetchTypes,
@@ -95,5 +105,6 @@ export default {
     createAlert: createAlert,
     fetchAlerts: fetchAlerts,
     updateAlert:updateAlert,
-    deleteAlerts: deleteAlerts
+    deleteAlerts: deleteAlerts,
+    count: count
 }

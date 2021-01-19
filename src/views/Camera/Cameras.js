@@ -12,7 +12,9 @@ const initialParams = {
     sort:{
         cameraId: 'desc'
     },
-    filterObj:{}
+    filterObj:{
+        active: true
+    }
 };
 
 const Cameras = props => {
@@ -69,7 +71,6 @@ const Cameras = props => {
             .then(res =>{
                 if(res.success){
                     setCameras(res.cameras);
-                    console.log(res.cameras);//todo
                     setDataTotalSize(res.total);
                 }else{
                     toast.warn(res.errorMsg);
@@ -136,14 +137,12 @@ const Cameras = props => {
      */
     const onFilterChange = filterObj =>{
         let tmp = {...params};
-        let filter = {};
         for (let [key, value] of Object.entries(filterObj)){
             if(key === 'station' || key === 'city')
-                filter[key] = value.value;
+                tmp.filterObj[key] = value.value;
             else
-                filter[key] = {$regex: `.*${value.value}.*`};
+                tmp.filterObj[key] = {$regex: `.*${value.value}.*`};
         }
-        tmp.filterObj = filter;
         setParams(tmp);
     };
 

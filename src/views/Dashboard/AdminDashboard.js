@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import Service from '../../Services';
 import {
   Card,
   CardBody,
@@ -6,6 +7,29 @@ import {
   Row} from 'reactstrap';
 
 const Dashboard = props =>{
+  const [users, setUsers] = useState(0);
+  const [stations, setStations] = useState(0);
+  const [cameras, setCameras] = useState(0);
+  const [alerts, setAlerts] = useState(0);
+
+  useEffect(() =>{
+    Service.AuthService.count()
+        .then(res =>{
+          setUsers(res.total);
+        });
+    Service.StationService.count()
+        .then(res =>{
+          setStations(res.total);
+        });
+      Service.CameraService.count()
+          .then(res =>{
+            setCameras(res.total);
+          });
+      Service.AlertService.count()
+          .then(res =>{
+            setAlerts(res.total);
+          })
+  }, []);
 
   return (
     <div className="animated fadeIn">
@@ -13,8 +37,8 @@ const Dashboard = props =>{
         <Col xs="12" sm="6" lg="3">
           <Card className="text-white bg-info">
             <CardBody className="pb-0">
-              <div className="text-value">9.823</div>
-              <div>Members online</div>
+              <div className="text-value">{users}</div>
+              <h5>Usuários registrados</h5>
               <div className="chart-wrapper mt-3" style={{ height: '70px' }}>
               </div>
             </CardBody>
@@ -24,8 +48,8 @@ const Dashboard = props =>{
         <Col xs="12" sm="6" lg="3">
           <Card className="text-white bg-primary">
             <CardBody className="pb-0">
-              <div className="text-value">9.823</div>
-              <div>Members online</div>
+              <div className="text-value">{stations}</div>
+              <h5>Estações Registradas</h5>
               <div className="chart-wrapper mt-3" style={{ height: '70px' }}>
               </div>
             </CardBody>
@@ -35,8 +59,8 @@ const Dashboard = props =>{
         <Col xs="12" sm="6" lg="3">
           <Card className="text-white bg-warning">
             <CardBody className="pb-0">
-              <div className="text-value">9.823</div>
-              <div>Members online</div>
+              <div className="text-value">{cameras}</div>
+              <h5>Câmeras Registradas</h5>
             </CardBody>
             <div className="chart-wrapper mt-3" style={{ height: '70px' }}>
             </div>
@@ -46,8 +70,8 @@ const Dashboard = props =>{
         <Col xs="12" sm="6" lg="3">
           <Card className="text-white bg-danger">
             <CardBody className="pb-0">
-              <div className="text-value">9.823</div>
-              <div>Members online</div>
+              <div className="text-value">{alerts}</div>
+              <h5>Alertas Registradas</h5>
             </CardBody>
             <div className="chart-wrapper mt-3 mx-3" style={{ height: '70px' }}>
             </div>

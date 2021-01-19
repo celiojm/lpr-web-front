@@ -84,6 +84,16 @@ const updateProfile = (id, profile) =>{
         .then(data => data);
 };
 
+const count = () =>{
+    return fetch(`/user/count`, {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json())
+        .then(data => data);
+};
+
 export default {
     login: login,
     create: create,
@@ -92,5 +102,6 @@ export default {
     users: users,
     deleteUser: deleteUser,
     profile: profile,
-    update: updateProfile
+    update: updateProfile,
+    count: count
 }

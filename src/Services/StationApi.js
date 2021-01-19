@@ -41,9 +41,20 @@ const deleteStation = stations =>{
         .then(data => data);
 };
 
+const count = () =>{
+    return fetch('/station/count', {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    }).then(res =>res.json())
+        .then(data => data);
+};
+
 export default {
     create:create,
     fetchAll: fetchAll,
     update: update,
-    deleteStation: deleteStation
+    deleteStation: deleteStation,
+    count: count
 }
