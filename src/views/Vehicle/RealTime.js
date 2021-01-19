@@ -177,13 +177,6 @@ const RealTime = props => {
         onFilterChange({key: 'type', type: parseInt(event.target.value), value: event.target.checked});
     };
 
-    const onHover = (row, event) =>{
-        let elem = event.target;
-        if(elem.tagName === 'TD'){
-            setVehicle(row);
-        }
-    };
-
     const options ={
         searchDelayTime: 1500,
         sortIndicator: true,

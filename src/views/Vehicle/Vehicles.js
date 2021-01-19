@@ -109,25 +109,6 @@ const Vehicles = props => {
         setParams(tmp);
     };
 
-    const onHover = (row, event) =>{
-        let elem = event.target;
-        if(elem.tagName === 'TD'){
-            let tabIndex = elem.getAttribute('tabindex');
-            if (tabIndex === '1') {
-                openPopUp(row.vehicleImg, 'vehicle');
-            }else if(tabIndex === '2'){
-                openPopUp(row.plateImg, 'plate')
-            }
-        }
-    };
-
-    const onLeave = (row, event) =>{
-        let elem = event.target;
-        if(elem.tagName === 'TD'){
-            setPopOver(false)
-        }
-    };
-
     /**=====================
      *  Datatable option
      * @type {{searchDelayTime: number,
