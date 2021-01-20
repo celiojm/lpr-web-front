@@ -16,7 +16,7 @@ import AppSidebarNav from "@coreui/react/es/SidebarNav";
 import AppSidebarFooter from "@coreui/react/es/SidebarFooter";
 import AppSidebarMinimizer from "@coreui/react/es/SidebarMinimizer";
 import {AdminRoute, UserRoute} from '../../routes';
-import {adminNav} from '../../_nav';
+import {adminNav, userNav} from '../../_nav';
 import Context from "../../Context";
 import Services from "../../Services";
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
@@ -54,7 +54,7 @@ const DefaultLayout = (props) => {
                 <AppSidebar fixed display="lg">
                     <AppSidebarHeader />
                     <Suspense>
-                        <AppSidebarNav navConfig={adminNav} {...props} />
+                        <AppSidebarNav navConfig={user.role === 'admin'?adminNav:userNav} {...props} />
                     </Suspense>
                     <AppSidebarFooter />
                     <AppSidebarMinimizer />

@@ -92,7 +92,7 @@ const VehicleDetail = props => {
                                     <div className="sk-circle11 sk-child"/>
                                     <div className="sk-circle12 sk-child"/>
                                 </div>}
-                                error={() => <div>Imagem não existe</div>}
+                                error={() =>  console.log(`${process.env.REACT_APP_STORAGE_URL}/vehicle/${res.vehicle.vehicleImg}`)}
                             />
                         </Col>
                         <Col sm="6">

@@ -56,7 +56,7 @@ const RealTime = props => {
 
     const socketHandler = (data) =>{
         if(params.filterObj.alert.length < 1 || params.filterObj.alert.indexOf(data.alert) !== -1){
-            setVehicles(prev => [data, ...prev]);
+            setVehicles(prev => [data, ...prev.pop()]);
             setDataTotalSize(prev => prev + 1);
         }
     };
