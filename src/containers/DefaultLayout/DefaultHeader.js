@@ -15,8 +15,7 @@ const propTypes = {
 const defaultProps = {};
 
 const DefaultHeader = props => {
-    const {user} = useContext(Context.AuthContext);
-
+    const {user, notifications} = useContext(Context.AuthContext);
     return (
         <React.Fragment>
             <AppSidebarToggler className="d-lg-none" display="md" mobile />
@@ -26,7 +25,7 @@ const DefaultHeader = props => {
             />
             <AppSidebarToggler className="d-md-down-none" display="lg" />
             <Nav className="ml-auto" navbar>
-                <DefaultHeaderDropdown notif/>
+                <DefaultHeaderDropdown notif notifications={notifications} history={props.history}/>
                 <DefaultHeaderDropdown onLogout={props.onLogout} accnt user={user} history={props.history}/>
             </Nav>
             <div style={{width: '20px'}}/>

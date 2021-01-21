@@ -76,9 +76,9 @@ const RealTime = props => {
                 }
             });
 
-            socket.on("vehicle", socketHandler);
+        socket.on("vehicle", socketHandler);
 
-            return () => {socket.disconnect();}
+        return () => {socket.disconnect();}
     }, []);
 
     useEffect(() =>{

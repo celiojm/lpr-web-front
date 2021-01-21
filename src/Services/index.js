@@ -6,6 +6,7 @@ import AlertApi from './AlertApi';
 import GroupApi from './GroupApi';
 import PermissionApi from './PermissionApi';
 import VehicleApi from './Vehicles';
+import Notification from './NotificationApi';
 
 export default {
     AuthService: AuthService,
@@ -15,5 +16,6 @@ export default {
     AlertService: AlertApi,
     GroupService: GroupApi,
     PermissionService: PermissionApi,
-    VehicleService: VehicleApi
+    VehicleService: VehicleApi,
+    NotificationService: Notification
 }
