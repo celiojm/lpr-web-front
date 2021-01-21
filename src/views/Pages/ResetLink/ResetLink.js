@@ -94,6 +94,7 @@ const ResetLink = props =>{
                                                 {res && res.success?
                                                     <Alert color="success">
                                                         {res.message}
+                                                        <h5>Não se esqueça de verificar o spam</h5>
                                                     </Alert>
                                                     :res && !res.success
                                                         ?<Alert color="warning">
