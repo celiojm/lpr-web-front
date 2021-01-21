@@ -5,8 +5,17 @@ const login = user =>{
         headers: {
             'Content-Type': 'application/json'
         }
-    }).then(res =>res.json())
-        .then(data => data);
+    }).then(res =>{
+        if(res.status === 200){
+            return res.json()
+                .then(data => data);
+        }else{
+            return {
+                success: false,
+                errorMsg: "Credencial inválida"
+            }
+        }
+    });
 };
 
 const create = user =>{
@@ -94,6 +103,38 @@ const count = () =>{
         .then(data => data);
 };
 
+const resetLink = email =>{
+    return fetch(`/user/reset-link`, {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(email)
+    }).then(res => res.json())
+        .then(data => data);
+};
+
+const getResetLink = token =>{
+    return fetch(`/user/get-link/${token}`, {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json())
+        .then(data => data);
+};
+
+const resetPassword = user =>{
+    return fetch(`/user/reset-password`, {
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    }).then(res => res.json())
+        .then(data => data);
+};
+
 export default {
     login: login,
     create: create,
@@ -103,5 +144,8 @@ export default {
     deleteUser: deleteUser,
     profile: profile,
     update: updateProfile,
-    count: count
+    count: count,
+    resetLink: resetLink,
+    getResetLink: getResetLink,
+    resetPassword: resetPassword
 }

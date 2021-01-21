@@ -152,6 +152,7 @@ const Login = props => {
                               </Form>
                               ) }
                       />
+                      <p>Esqueceu a senha? <a href="/#/reset">Redefinir senha</a></p>
                   </CardBody>
                 </Card>
               </CardGroup>

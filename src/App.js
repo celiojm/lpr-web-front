@@ -16,19 +16,14 @@ const Login = Loadable({
   loading
 });
 
-const Register = Loadable({
-  loader: () => import('./views/Pages/Register'),
+const ResetPassword = Loadable({
+  loader: () => import('./views/Pages/ResetPassword/ResetPassword'),
   loading
 });
 
-const Page404 = Loadable({
-  loader: () => import('./views/Pages/Page404'),
-  loading
-});
-
-const Page500 = Loadable({
-  loader: () => import('./views/Pages/Page500'),
-  loading
+const ResetLink = Loadable({
+    loader: () => import('./views/Pages/ResetLink/ResetLink'),
+    loading
 });
 
 const App = () => {
@@ -40,13 +35,18 @@ const App = () => {
             <HashRouter>
                 <Switch>
                     <Route exact path="/login" name="Login Page" component={Login} />
-                    <Route exact path="/register" name="Register Page" component={Register} />
-                    <Route exact path="/404" name="Page 404" component={Page404} />
-                    <Route exact path="/500" name="Page 500" component={Page500} />
+                    <Route exact path="/reset" name="Reset Password" component={ResetLink}/>
+                    <Route exact path="/cmVzZXRwYXNzd29yZA/:token" name="Reset Password" component={ResetPassword}/>
                     <Route path="/" name="Dashboard" component={DefaultLayout} />
                 </Switch>
             </HashRouter>:
-            <Login/>
+            <HashRouter>
+                <Switch>
+                    <Route exact path="/reset" name="Reset Password" component={ResetLink}/>
+                    <Route exact path="/cmVzZXRwYXNzd29yZA/:token" name="Reset Password" component={ResetPassword}/>
+                    <Route exact path="*"  component={Login}/>
+                </Switch>
+            </HashRouter>
     );
 };
 

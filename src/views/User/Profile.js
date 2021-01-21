@@ -145,9 +145,11 @@ const  Profile = props => {
                             label: permission.name
                         })
                     }
+                    initialValues.success = true;
                     setPermission(pers);
                     setProfile(initialValues);
                 }else{
+                    setProfile({success: false});
                     toast.warn(res.errorMsg);
                 }
             });
@@ -173,7 +175,7 @@ const  Profile = props => {
     const loading = () => <div className="animated fadeIn pt-1 text-center"><div className="sk-spinner sk-spinner-pulse"/></div>;
 
     const load = () =>{
-        if(profile)
+        if(profile && profile.success)
             return <Formik
                 initialValues={profile}
                 validate={validate(validationSchema)}
@@ -381,8 +383,10 @@ const  Profile = props => {
                             </Col>
                         </Row>
                     )} />;
-                    else
-                        return loading();
+                    else if(profile)
+                        return <div className="animated fadeIn pt-1 text-center">Perfil não existe</div>;
+                        else
+                            return loading();
     };
 
     return (
