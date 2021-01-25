@@ -51,10 +51,10 @@ const validationSchema = function (values) {
             .email('Email inválido'),
         whatsApp: Yup.string()
             .required('Whatsapp é necessário')
-            .matches(/\((?:1[2-9]|[2-9]\d)\) [5-9]\d{8}$/, 'Número de Whatsapp inválido'),
+            .matches(/(?:1[2-9]|[2-9]\d) [5-9]\d{8}$/, 'Número de Whatsapp inválido'),
         mobile: Yup.string()
             .required('Celular é necessário')
-            .matches(/\((?:1[2-9]|[2-9]\d)\) [5-9]\d{8}$/, 'Número de celular inválido'),
+            .matches(/(?:1[2-9]|[2-9]\d) [5-9]\d{8}$/, 'Número de celular inválido'),
         role: Yup.string()
             .required('Função é necessário'),
         password: Yup.string()
@@ -151,8 +151,8 @@ const  CreateUser = props => {
     const onSubmit = async (values, { setSubmitting, setErrors })  =>{
         let params = {...values};
         params.permissions = permission.map(a => a.value);
-        params.whatsApp = "+55" + params.whatsApp.replace(/[()]/g,'').replace(/\s/g, '');
-        params.mobile = "+55" + params.mobile.replace(/[()]/g,'').replace(/\s/g, '');
+        params.whatsApp = "+55" + params.whatsApp.replace(/\s/g, '');
+        params.mobile = "+55" + params.mobile.replace(/\s/g, '');
 
         Services.AuthService.create(params)
             .then(res =>{
@@ -295,7 +295,7 @@ const  CreateUser = props => {
                                                         <Input type="tel"
                                                                name="whatsApp"
                                                                id="whatsApp"
-                                                               placeholder="Whatsapp: (48) 984046118"
+                                                               placeholder="Whatsapp: 48 984046118"
                                                                autoComplete="whatAapp"
                                                                valid={!errors.whatsApp}
                                                                invalid={touched.whatsApp && !!errors.whatsApp}
@@ -309,7 +309,7 @@ const  CreateUser = props => {
                                                         <Input type="tel"
                                                                name="mobile"
                                                                id="mobile"
-                                                               placeholder="Móvel: (48) 984046118"
+                                                               placeholder="Móvel: 48 984046118"
                                                                autoComplete="mobile"
                                                                valid={!errors.mobile}
                                                                invalid={touched.mobile && !!errors.mobile}
