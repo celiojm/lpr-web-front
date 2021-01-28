@@ -9,7 +9,7 @@ const initialParams = {
     page: 1,
     sizePerPage: 10,
     sort:{
-        cameraId: 'desc'
+        createdAt: 'desc'
     },
     filterObj:{}
 };
@@ -170,6 +170,25 @@ const Vehicles = props => {
         return <Button color="primary" onClick={() => props.history.push(`/vehicle/detail/${id}`)}>Ver Detalhes</Button>
     };
 
+    const onBeforeSaveCell = (row, cellName, cellValue) => {
+        let userInput = window.confirm(`Tem certeza de que deseja salvar o campo "${cellName}" como "${cellValue}"?`);
+        if(userInput){
+            Services.VehicleService.update({id: row._id, query: {[cellName]: cellValue}}).then(res =>{
+                if(res.success){
+                    let newVehicles = [...vehicles];
+                    let index = newVehicles.findIndex((element)=> element._id === row._id);
+                    newVehicles[index][cellName] = cellValue;
+                    setVehicles(newVehicles);
+                    toast.success('Atualizado com sucesso');
+                    return true;
+                }else{
+                    toast.warn(res.errorMsg);
+                    return false;
+                }
+            });
+        }
+    };
+
     return (
         <div className="animated">
             <Card>
@@ -182,12 +201,17 @@ const Vehicles = props => {
                         data={vehicles}
                         version="4"
                         striped
+                        cellEdit={{
+                            mode: 'dbclick',
+                            blurToSave: true,
+                            beforeSaveCell: onBeforeSaveCell
+                        }}
                         pagination={true}
                         fetchInfo={{dataTotalSize: dataTotalSize}}
                         options={options}>
 
                         <TableHeaderColumn dataField="license" dataSort
-                                           editable={false} width="100"
+                                           editable={true} width="100"
                                            filter={{type:'TextFilter'}} dataFormat={licenseFormatter}>Licença</TableHeaderColumn>
                         <TableHeaderColumn dataField='alert' dataSort width="150"
                                            editable={false} filter={ { type: 'SelectFilter', options: alertTypes}}

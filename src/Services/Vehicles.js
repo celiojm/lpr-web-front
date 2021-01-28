@@ -30,8 +30,20 @@ const fetchAlert = params =>{
         .then(data => data);
 };
 
+const update = query =>{
+    return fetch('/vehicle/update', {
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(query)
+    }).then(res => res.json())
+        .then(data => data);
+};
+
 export default {
     fetchVehicles: fetchVehicles,
     fetchOne: fetchOne,
-    fetchAlert: fetchAlert
+    fetchAlert: fetchAlert,
+    update: update
 };

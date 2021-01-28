@@ -197,6 +197,25 @@ const RealTime = props => {
         return <span onMouseEnter={() => setVehicle(row)}>{license}</span>
     };
 
+    const onBeforeSaveCell = (row, cellName, cellValue) => {
+        let userInput = window.confirm(`Tem certeza de que deseja salvar o campo "${cellName}" como "${cellValue}"?`);
+        if(userInput){
+            Services.VehicleService.update({id: row._id, query: {[cellName]: cellValue}}).then(res =>{
+                if(res.success){
+                    let newVehicles = [...vehicles];
+                    let index = newVehicles.findIndex((element)=> element._id === row._id);
+                    newVehicles[index][cellName] = cellValue;
+                    setVehicles(newVehicles);
+                    toast.success('Atualizado com sucesso');
+                    return true;
+                }else{
+                    toast.warn(res.errorMsg);
+                    return false;
+                }
+            });
+        }
+    };
+
     return (
         <div className="animated">
             <Card>
@@ -280,11 +299,16 @@ const RealTime = props => {
                                 data={vehicles}
                                 version="4"
                                 striped
+                                cellEdit={{
+                                    mode: 'dbclick',
+                                    blurToSave: true,
+                                    beforeSaveCell: onBeforeSaveCell
+                                }}
                                 pagination={true}
                                 fetchInfo={{dataTotalSize: dataTotalSize}}
                                 options={options}>
 
-                                <TableHeaderColumn dataField="license" dataSort editable={false} width="100" dataFormat={licenseFormatter}>Placa</TableHeaderColumn>
+                                <TableHeaderColumn dataField="license" dataSort editable={true} width="100" dataFormat={licenseFormatter}>Placa</TableHeaderColumn>
                                 <TableHeaderColumn dataField="createdAt" dataSort editable={false} width="150" dataFormat={dateFormatter}>Lido em: </TableHeaderColumn>
                                 <TableHeaderColumn dataField='camera' dataSort width="200" editable={false} dataFormat={cameraFormatter}>Câmera</TableHeaderColumn>
                                 <TableHeaderColumn dataField='model' dataSort editable={false} width="250">Marca/Modelo</TableHeaderColumn>
