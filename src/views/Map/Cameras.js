@@ -151,7 +151,6 @@ const CameraMap = props => {
         Services.CameraService.fetch()
             .then(res =>{
                 if(res.success){
-                    console.log(res.cameras);
                     let cams = [];
                     for(let camera of res.cameras){
                         camera.latitude = camera.location.coordinates[0];

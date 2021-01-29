@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {Card, CardHeader, CardBody} from 'reactstrap';
+import {Card, CardHeader, CardBody, Button, Input, FormGroup, Form, Row, Col, FormFeedback} from 'reactstrap';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import Select from 'react-select';
 import 'react-bootstrap-table/dist//react-bootstrap-table-all.min.css';
 import {toast} from 'react-toastify';
 import Services from '../../Services';
+import * as Yup from "yup";
+import {Formik} from "formik";
 
 const initialParams = {
     page: 1,
@@ -168,6 +170,10 @@ const Cameras = props => {
         else return station;
     };
 
+    const locationFormatter = location =>{
+        return `${location.coordinates[0]}, ${location.coordinates[1]}`;
+    };
+
     /**=======================
      *  City column custom sort function
      * @param a: first record object(whole row data)
@@ -244,6 +250,8 @@ const Cameras = props => {
 
     const createCityEditor = (onUpdate, props) => (<CityEditor onUpdate={onUpdate}{...props}/>);
 
+    const createCoordinateEditor = (onUpdate, props) =>(<CoordinateEditor onUpdate={onUpdate}{...props}/>);
+
     /**============================
      *  Confirm cell edit
      * @param row: whole row data
@@ -263,6 +271,10 @@ const Cameras = props => {
                 label = `${cellValue.city}-${cellValue.state}`;
                 value = cellValue._id;
                 newProperty = cities[value];
+            }else if(cellName === 'location'){
+                label = `${cellValue.coordinates[0]}, ${cellValue.coordinates[1]}`;
+                value = cellValue;
+                newProperty = cellValue;
             }
         }else{
             label = cellValue;
@@ -317,7 +329,6 @@ const Cameras = props => {
                                            dataFormat={StationFormatter} filterFormatted
                                            customEditor={ { getElement: createStationEditor, customEditorParameters: { stations: stations}}}
                                             filter={ { type: 'SelectFilter', options: stationsForFilter } }>Estação</TableHeaderColumn>
-
                         <TableHeaderColumn  dataField="city" dataSort sortFunc={citySort}
                                             dataFormat={CityFormatter} filterFormatted
                                             filter={ { type: 'SelectFilter', options: citiesForFilter }}
@@ -325,6 +336,7 @@ const Cameras = props => {
                         <TableHeaderColumn  dataField="street" dataSort filter={{type:'TextFilter'}} width="150">Street</TableHeaderColumn>
                         <TableHeaderColumn  dataField="neighborhood" dataSort filter={{type:'TextFilter'}} width="150">Vizinhança</TableHeaderColumn>
                         <TableHeaderColumn  dataField="serialNumber" dataSort filter={{type:'TextFilter'}} width="200">Número de série</TableHeaderColumn>
+                        <TableHeaderColumn  dataField="location" width="250" dataFormat={locationFormatter} customEditor={{ getElement: createCoordinateEditor}}>Coordenada</TableHeaderColumn>
                         <TableHeaderColumn dataField='_id' isKey={true} hidden={true}>_id</TableHeaderColumn>
                     </BootstrapTable>
                 </CardBody>
@@ -442,6 +454,126 @@ class CityEditor extends React.Component {
                 </button>
             </div>
         );
+    }
+}
+
+class CoordinateEditor extends React.Component{
+    constructor(props){
+        super(props);
+        this.onSubmit = this.onSubmit.bind(this);
+        this.state = props.defaultValue
+    }
+
+    validationSchema(values){
+        return Yup.object().shape({
+            latitude: Yup.number()
+                .min(-90, 'O valor mínimo é -90')
+                .max(90, 'O valor máximo é 90')
+                .typeError('Latitude must be a number')
+                .required("Latitude is required"),
+            longitude: Yup.number()
+                .min(-180, 'O valor mínimo é -180')
+                .max(180, 'O valor máximo é 180')
+                .typeError('Longitude must be a number')
+                .required('Longitude is required')
+        });
+    }
+
+    validate (getValidationSchema) {
+        return (values) => {
+            const validationSchema = getValidationSchema(values);
+            try {
+                validationSchema.validateSync(values, { abortEarly: false });
+                return {}
+            } catch (error) {
+                return this.getErrorsFromValidationError(error)
+            }
+        }
+    };
+
+    getErrorsFromValidationError  (validationError)  {
+        const FIRST_ERROR = 0;
+        return validationError.inner.reduce((errors, error) => {
+            return {
+                ...errors,
+                [error.path]: error.errors[FIRST_ERROR],
+            }
+        }, {})
+    };
+
+    onSubmit(values, { setSubmitting, setErrors }){
+        this.props.onUpdate({coordinates: [values.latitude, values.longitude], type: "Point"});
+    }
+
+    render(){
+        return (
+            <div>
+                <Formik
+                    initialValues={{latitude: this.state.coordinates[0], longitude: this.state.coordinates[1]}}
+                    validate={this.validate(this.validationSchema)}
+                    onSubmit={this.onSubmit}
+                    render={
+                        ({
+                             values,
+                             errors,
+                             touched,
+                             status,
+                             dirty,
+                             handleChange,
+                             handleBlur,
+                             handleSubmit,
+                             isSubmitting,
+                             isValid,
+                         }) => (
+                            <Row>
+                                <Col>
+                                    <Form onSubmit={handleSubmit} noValidate name='simpleForm'>
+                                        <FormGroup>
+                                            <Input type="number"
+                                                   name="latitude"
+                                                   id="latitude"
+                                                   min="-90"
+                                                   max="90"
+                                                   placeholder="Latitude"
+                                                   valid={!errors.latitude}
+                                                   invalid={touched.latitude && !!errors.latitude}
+                                                   required
+                                                   onChange={handleChange}
+                                                   onBlur={handleBlur}
+                                                   value={values.latitude} />
+                                            <FormFeedback>{errors.latitude}</FormFeedback>
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <Input type="number"
+                                                   name="longitude"
+                                                   id="longitude"
+                                                   placeholder="Longitude"
+                                                   valid={!errors.longitude}
+                                                   invalid={touched.longitude && !!errors.longitude}
+                                                   required
+                                                   onChange={handleChange}
+                                                   onBlur={handleBlur}
+                                                   value={values.longitude} />
+                                            <FormFeedback>{errors.longitude}</FormFeedback>
+                                        </FormGroup>
+                                        <FormGroup className="text-center">
+                                            <Button type="button" color="warning"
+                                                    className="mr-1"
+                                                    onClick={ () =>this.props.onUpdate(null)}
+                                                    disabled={isSubmitting}>
+                                                Cancelar
+                                            </Button>
+                                            <Button type="submit" color="primary"
+                                                    className="mr-1"
+                                                    disabled={isSubmitting || !isValid}>
+                                                {isSubmitting ? 'Esperar...' : 'Atualizar'}
+                                            </Button>
+                                        </FormGroup>
+                                    </Form>
+                                </Col>
+                            </Row>
+                        )} />
+        </div>);
     }
 }
 

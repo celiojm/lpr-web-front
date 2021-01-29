@@ -25,9 +25,13 @@ const validationSchema = function (values) {
         brand: Yup.string()
             .required('Camera brand is required'),
         latitude: Yup.number()
+            .min(-90, 'O valor mínimo é -90')
+            .max(90, 'O valor máximo é 90')
             .typeError('Latitude must be a number')
             .required("Latitude is required"),
         longitude: Yup.number()
+            .min(-180, 'O valor mínimo é -180')
+            .max(180, 'O valor máximo é 180')
             .typeError('Longitude must be a number')
             .required('Longitude is required'),
         street: Yup.string()
