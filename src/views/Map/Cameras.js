@@ -10,7 +10,7 @@ import ImageLoader from "react-loading-image/lib/index";
 
 const MapWithAMarkerClusterer = compose(
     withProps({
-        googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBli0L8vtKG4nUwAwMyMEmNhX6gEsfrIkg&v=3.exp&libraries=geometry,drawing,places",
+        googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&v=3.exp&libraries=geometry,drawing,places`,
         loadingElement: <div style={{ height: `100%` }} />,
         containerElement: <div style={{ height: `750px` }} />,
         mapElement: <div style={{ height: `100%` }} />,
