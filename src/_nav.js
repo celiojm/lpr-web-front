@@ -72,6 +72,16 @@ export const adminNav = {
           icon: 'icon-feed',
       },
       {
+          name: 'Mapa',
+          icon: 'icon-marker',
+          children: [
+              {
+                  name: 'Câmeras no mapa',
+                  url: '/map/camera',
+              }
+          ],
+      },
+      {
           name: 'Usuário',
           icon: 'icon-user',
           children: [
@@ -152,6 +162,11 @@ export const userNav = {
             ],
         },
         {
+            name: 'Mapa',
+            icon: 'cui-location-pin',
+            url: '/map/camera'
+        },
+        {
             name: 'Veículos',
             url: '/vehicle/all',
             icon: 'fa fa-automobile',
@@ -160,6 +175,6 @@ export const userNav = {
             name: 'Tempo Real',
             url: '/realtime',
             icon: 'icon-feed',
-        }
+        },
     ]
 };

@@ -41,9 +41,20 @@ const update = query =>{
         .then(data => data);
 };
 
+const lastAlertForCamera = query =>{
+    return fetch(`/vehicle/lastAlert/${query.station}/${query.cameraId}`, {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res =>res.json())
+        .then(data => data);
+};
+
 export default {
     fetchVehicles: fetchVehicles,
     fetchOne: fetchOne,
     fetchAlert: fetchAlert,
-    update: update
+    update: update,
+    lastAlertForCamera: lastAlertForCamera
 };
