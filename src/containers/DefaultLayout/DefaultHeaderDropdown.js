@@ -67,7 +67,7 @@ const DefaultHeaderDropdown = props =>{
         <DropdownToggle nav>
           <i className="icon-bell"/>{props.notifications.total !== 0?<Badge pill color="danger">{props.notifications.total}</Badge>:""}
         </DropdownToggle>
-        <DropdownMenu right>
+        <DropdownMenu right style={{maxHeight: '500px', overflowY: 'scroll'}}>
           <DropdownItem header tag="div" className="text-center"><strong>Você tem {props.notifications.total} notificações</strong></DropdownItem>
             {
               props.notifications.notifications.map(

@@ -19,8 +19,8 @@ import {AdminRoute, UserRoute} from '../../routes';
 import {adminNav, userNav} from '../../_nav';
 import Context from "../../Context";
 import Services from "../../Services";
+import DefaultFooter from './DefaultFooter';
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
-const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 
@@ -88,9 +88,7 @@ const DefaultLayout = (props) => {
                 </AppAside>
             </div>
             <AppFooter>
-                <Suspense fallback={loading()}>
-                    <DefaultFooter />
-                </Suspense>
+                <DefaultFooter />
             </AppFooter>
         </div>
     );

@@ -51,10 +51,22 @@ const lastAlertForCamera = query =>{
         .then(data => data);
 };
 
+const search = params =>{
+    return fetch('/vehicle/search', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+    }).then(res =>res.json())
+        .then(data => data);
+};
+
 export default {
     fetchVehicles: fetchVehicles,
     fetchOne: fetchOne,
     fetchAlert: fetchAlert,
     update: update,
-    lastAlertForCamera: lastAlertForCamera
+    lastAlertForCamera: lastAlertForCamera,
+    search: search
 };

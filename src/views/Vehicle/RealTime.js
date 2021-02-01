@@ -10,7 +10,7 @@ const initialParams = {
     page: 1,
     sizePerPage: 10,
     sort:{
-        cameraId: 'desc'
+        createdAt: 'desc'
     },
     filterObj:{
         alert:[],
@@ -61,6 +61,19 @@ const RealTime = props => {
         }
     };
 
+    const fetchVehicles = (params, cameras) =>{
+        if(cameras.length > 0)
+            Services.VehicleService.fetchAlert(params)
+                .then(res =>{
+                    if(res.success){
+                        setVehicles(res.vehicles);
+                        setDataTotalSize(res.total);
+                    }else{
+                        toast.warn(res.errorMsg);
+                    }
+                });
+    };
+
     useEffect(() =>{
         const socket = io(process.env.SOCKET_SERVER,{
             enableLogging: true,
@@ -82,16 +95,7 @@ const RealTime = props => {
     }, []);
 
     useEffect(() =>{
-        if(cameras.length > 0)
-            Services.VehicleService.fetchAlert(params)
-            .then(res =>{
-                if(res.success){
-                    setVehicles(res.vehicles);
-                    setDataTotalSize(res.total);
-                }else{
-                    toast.warn(res.errorMsg);
-                }
-            });
+        fetchVehicles(params, cameras);
     }, [params, cameras]);
 
     /**============================
@@ -202,10 +206,7 @@ const RealTime = props => {
         if(userInput){
             Services.VehicleService.update({id: row._id, query: {[cellName]: cellValue}}).then(res =>{
                 if(res.success){
-                    let newVehicles = [...vehicles];
-                    let index = newVehicles.findIndex((element)=> element._id === row._id);
-                    newVehicles[index][cellName] = cellValue;
-                    setVehicles(newVehicles);
+                    fetchVehicles(params, cameras);
                     toast.success('Atualizado com sucesso');
                     return true;
                 }else{

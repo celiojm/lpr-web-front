@@ -69,8 +69,8 @@ const VehicleDetail = props => {
                             <div>Licença: <strong>{res.vehicle.license}</strong></div>
                             <div>Alerta: <strong>{alertTypes[res.vehicle.alert]}</strong></div>
                             <div>Cor: <strong>{colors[res.vehicle.color]}</strong></div>
-                            <div> Tâmara: <strong>{res.vehicle.date}</strong></div>
-                            <div> Tempo: <strong>{res.vehicle.time}</strong></div>
+                            <div> Data: <strong>{res.vehicle.date}</strong></div>
+                            <div> Hora: <strong>{res.vehicle.time}</strong></div>
                         </Col>
                     </Row>
                     <Row>

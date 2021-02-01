@@ -73,13 +73,18 @@ export const adminNav = {
       },
       {
           name: 'Mapa',
-          icon: 'icon-marker',
+          icon: 'cui-location-pin',
           children: [
               {
                   name: 'Câmeras no mapa',
                   url: '/map/camera',
               }
           ],
+      },
+      {
+          name: 'Pesquisa',
+          icon: 'icon-magnifier',
+          url: '/search'
       },
       {
           name: 'Usuário',
@@ -165,6 +170,11 @@ export const userNav = {
             name: 'Mapa',
             icon: 'cui-location-pin',
             url: '/map/camera'
+        },
+        {
+            name: 'Pesquisa',
+            icon: 'icon-magnifier',
+            url: '/search'
         },
         {
             name: 'Veículos',

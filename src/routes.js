@@ -15,6 +15,7 @@ import Vehicles from './views/Vehicle/Vehicles';
 import VehicleDetail from './views/Vehicle/VehicleDetail';
 import RealTime from './views/Vehicle/RealTime';
 import CameraMap from './views/Map/Cameras';
+import Search from './views/Search';
 // import Page404 from './views/Pages/Page404';
 
 export const AdminRoute = [
@@ -34,6 +35,7 @@ export const AdminRoute = [
     {path: '/vehicle/detail/:id', name: 'Detalhe do veículo', component: VehicleDetail},
     {path: '/realtime', name: 'TEMPO REAL', component: RealTime, exact: true},
     {path: '/map/camera', name: 'Câmeras no mapa', component: CameraMap, exact: true},
+    {path: '/search', name: 'Parâmetros de Pesquisa', component: Search, exact: true},
     // {path: '*',  component: Page404, exact: true},
 ];
 
@@ -51,5 +53,6 @@ export const UserRoute = [
     {path: '/vehicle/detail/:id', name: 'Detalhe do veículo', component: VehicleDetail},
     {path: '/realtime', name: 'TEMPO REAL', component: RealTime, exact: true},
     {path: '/map/camera', name: 'Câmeras no mapa', component: CameraMap, exact: true},
+    {path: '/search', name: 'Parâmetros de Pesquisa', component: Search, exact: true},
     // {path: '*', component: Page404, exact: true},
 ];

@@ -51,7 +51,7 @@ const Vehicles = props => {
     const [dataTotalSize, setDataTotalSize] = useState(0);
     const [params, setParams] = useState(initialParams);
 
-    useEffect(() =>{
+    const fetchVehicles = (params) =>{
         Services.VehicleService.fetchVehicles(params)
             .then(res =>{
                 if(res.success){
@@ -61,6 +61,10 @@ const Vehicles = props => {
                     toast.warn(res.errorMsg);
                 }
             });
+};
+
+    useEffect(() =>{
+        fetchVehicles(params)
     }, [params]);
 
     /**============================
@@ -175,10 +179,7 @@ const Vehicles = props => {
         if(userInput){
             Services.VehicleService.update({id: row._id, query: {[cellName]: cellValue}}).then(res =>{
                 if(res.success){
-                    let newVehicles = [...vehicles];
-                    let index = newVehicles.findIndex((element)=> element._id === row._id);
-                    newVehicles[index][cellName] = cellValue;
-                    setVehicles(newVehicles);
+                    fetchVehicles(params);
                     toast.success('Atualizado com sucesso');
                     return true;
                 }else{
@@ -221,8 +222,8 @@ const Vehicles = props => {
                         <TableHeaderColumn dataField='color' dataSort editable={false}
                                            width="100" dataFormat={colorFormatter}
                                            filter={ { type: 'SelectFilter', options: colors}}>Cor</TableHeaderColumn>
-                        <TableHeaderColumn dataField='date' dataSort editable={false} width="100">Tâmara</TableHeaderColumn>
-                        <TableHeaderColumn dataField='time' dataSort editable={false} width="100">Tempo</TableHeaderColumn>
+                        <TableHeaderColumn dataField='date' dataSort editable={false} width="100">Data</TableHeaderColumn>
+                        <TableHeaderColumn dataField='time' dataSort editable={false} width="100">Hora</TableHeaderColumn>
                         <TableHeaderColumn dataField='_id' isKey={true} dataFormat={idFormatter} width="150">Açao</TableHeaderColumn>
                     </BootstrapTable>
                 </CardBody>
