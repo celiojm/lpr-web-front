@@ -65,7 +65,7 @@ const DefaultHeaderDropdown = props =>{
     return (
       <Dropdown nav className="d-md-down-none" isOpen={dropdownOpen} toggle={() => setDropdownOpen(!dropdownOpen)}>
         <DropdownToggle nav>
-          <i className="icon-bell"/>{props.notifications.total !== 0?<Badge pill color="danger">{props.notifications.total}</Badge>:""}
+          <i className="icon-bell"/>{props.notifications.total !== 0?<Badge pill color="danger">{props.notifications.total > 99?'99+':props.notifications.total}</Badge>:""}
         </DropdownToggle>
         <DropdownMenu right style={{maxHeight: '500px', overflowY: 'scroll'}}>
           <DropdownItem header tag="div" className="text-center"><strong>Você tem {props.notifications.total} notificações</strong></DropdownItem>
