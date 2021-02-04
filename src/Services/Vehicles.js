@@ -62,11 +62,23 @@ const search = params =>{
         .then(data => data);
 };
 
+const companion = params =>{
+    return fetch('/vehicle/companion', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+    }).then(res =>res.json())
+        .then(data => data);
+};
+
 export default {
     fetchVehicles: fetchVehicles,
     fetchOne: fetchOne,
     fetchAlert: fetchAlert,
     update: update,
     lastAlertForCamera: lastAlertForCamera,
-    search: search
+    search: search,
+    companion: companion
 };

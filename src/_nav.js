@@ -74,17 +74,17 @@ export const adminNav = {
       {
           name: 'Mapa',
           icon: 'cui-location-pin',
-          children: [
-              {
-                  name: 'Câmeras no mapa',
-                  url: '/map/camera',
-              }
-          ],
+          url: '/map/camera'
       },
       {
           name: 'Pesquisa',
           icon: 'icon-magnifier',
           url: '/search'
+      },
+      {
+          name: 'Companion',
+          icon: 'fa fa-automobile',
+          url: '/companion',
       },
       {
           name: 'Usuário',

@@ -39,6 +39,7 @@ const Cameras = props => {
     const [model, setModel] = useState('');
     const [brand, setBrand] = useState('');
     const [color, setColor] = useState('');
+    const [originColor, setOriginColor] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [startMoment, setStartMoment] = useState(null);
@@ -68,6 +69,7 @@ const Cameras = props => {
         body.model = model;
         body.brand = brand;
         body.color = color;
+        body.originColor = originColor;
         body.startDate = startDate;
         body.endDate = endDate;
         Services.VehicleService.search(body)
@@ -94,6 +96,7 @@ const Cameras = props => {
         body.model = model;
         body.brand = brand;
         body.color = color;
+        body.originColor = originColor;
         body.startDate = startDate;
         body.endDate = endDate;
         Services.VehicleService.search(body)
@@ -112,6 +115,7 @@ const Cameras = props => {
         setModel('');
         setBrand('');
         setColor('');
+        setOriginColor('');
         setStartDate('');
         setEndDate('');
         setStartMoment(null);
@@ -235,6 +239,18 @@ const Cameras = props => {
                                        onChange={event => setColor(event.target.value)}
                                        id="color">
                                     <option value="">Qualquer cor</option>
+                                    {
+                                        colors.map(color => (<option value={color.key} key={color.key}>{color.value}</option>))
+                                    }
+                                </Input>
+                            </FormGroup>
+                            <FormGroup>
+                                <Input type="select"
+                                       name="originColor"
+                                       value={color}
+                                       onChange={event => setOriginColor(event.target.value)}
+                                       id="originColor">
+                                    <option value="">Cor de origem</option>
                                     {
                                         colors.map(color => (<option value={color.key} key={color.key}>{color.value}</option>))
                                     }

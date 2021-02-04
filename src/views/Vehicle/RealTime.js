@@ -160,7 +160,7 @@ const RealTime = props => {
             hour12: false
         };
         let date = new Date(Date.parse(datetime));
-        return new Intl.DateTimeFormat('en-US', options).format(date);
+        return new Intl.DateTimeFormat('pt-BR', options).format(date);
     };
 
     const cameraFormatter = (a, b) =>{
@@ -310,7 +310,7 @@ const RealTime = props => {
                                 options={options}>
 
                                 <TableHeaderColumn dataField="license" dataSort editable={true} width="100" dataFormat={licenseFormatter}>Placa</TableHeaderColumn>
-                                <TableHeaderColumn dataField="createdAt" dataSort editable={false} width="150" dataFormat={dateFormatter}>Lido em: </TableHeaderColumn>
+                                <TableHeaderColumn dataField="detectedAt" dataSort editable={false} width="150" dataFormat={dateFormatter}>Lido em: </TableHeaderColumn>
                                 <TableHeaderColumn dataField='camera' dataSort width="200" editable={false} dataFormat={cameraFormatter}>Câmera</TableHeaderColumn>
                                 <TableHeaderColumn dataField='model' dataSort editable={false} width="250">Marca/Modelo</TableHeaderColumn>
                                 <TableHeaderColumn dataField='color' dataSort editable={false}
