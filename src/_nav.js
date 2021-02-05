@@ -82,7 +82,7 @@ export const adminNav = {
           url: '/search'
       },
       {
-          name: 'Companion',
+          name: 'veículo seguidor',
           icon: 'fa fa-automobile',
           url: '/companion',
       },
@@ -167,6 +167,16 @@ export const userNav = {
             ],
         },
         {
+            name: 'Veículos',
+            url: '/vehicle/all',
+            icon: 'fa fa-automobile',
+        },
+        {
+            name: 'Tempo Real',
+            url: '/realtime',
+            icon: 'icon-feed',
+        },
+        {
             name: 'Mapa',
             icon: 'cui-location-pin',
             url: '/map/camera'
@@ -177,14 +187,9 @@ export const userNav = {
             url: '/search'
         },
         {
-            name: 'Veículos',
-            url: '/vehicle/all',
+            name: 'veículo seguidor',
             icon: 'fa fa-automobile',
-        },
-        {
-            name: 'Tempo Real',
-            url: '/realtime',
-            icon: 'icon-feed',
+            url: '/companion',
         },
     ]
 };

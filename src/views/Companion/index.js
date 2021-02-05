@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {Card, CardHeader, CardBody, Button, Input, FormGroup, Form, Col, Label} from 'reactstrap';
+import {Card, CardHeader, CardBody, Button, Input, FormGroup, Form, Row,Col, Label} from 'reactstrap';
 import 'react-dates/initialize';
-import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import './react_dates_overrides.css';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
@@ -36,17 +35,15 @@ const initialParams = {
 const Companion = props => {
 
     const [plate, setPlate] = useState('');
-    // const [startDate, setStartDate] = useState('');
-    // const [endDate, setEndDate] = useState('');
-    // const [startMoment, setStartMoment] = useState(null);
-    // const [endMoment, setEndMoment] = useState(null);
-    // const [focusedInput, setFocusedInput] = useState(null);
 
     const [params, setParams] = useState(initialParams);
     const [dataTotalSize, setDataTotalSize] = useState(0);
     const [vehicles, setVehicles] = useState([]);
 
     const [cameras, setCameras] = useState([]);
+
+    const [popup, setPopup] = useState(null);
+    const [target, setTarget] = useState(null);
 
     useEffect(() =>{
         Services.CameraService.fetch()
@@ -59,21 +56,13 @@ const Companion = props => {
             });
     }, []);
 
-    // const updateDateRangePicker = (start, end) =>{
-    //     setStartMoment(start);
-    //     setEndMoment(end);
-    //     if(start) setStartDate(start._d);
-    //     if(end) setEndDate(end._d);
-    // };
-
     const submit = () =>{
         let body = {...initialParams};
         body.plate = plate;
-        // body.startDate = startDate;
-        // body.endDate = endDate;
         Services.VehicleService.companion(body)
             .then(res => {
                 if(res.success){
+                    setTarget(res.target);
                     setVehicles(res.vehicles);
                     setDataTotalSize(res.total);
                 }else{
@@ -82,13 +71,13 @@ const Companion = props => {
             });
     };
 
-    // const clear = () =>{
-    //     setPlate('');
-    //     setStartDate('');
-    //     setEndDate('');
-    //     setStartMoment(null);
-    //     setEndMoment(null);
-    // };
+    const openPopUp = row =>{
+        setPopup({
+            license: row.license,
+            plate: row.plateImg,
+            vehicle: row.vehicleImg
+        });
+    };
 
     const onPageChange = (page, sizePerPage) =>{
         let tmp = {...params};
@@ -144,7 +133,13 @@ const Companion = props => {
     };
 
     const licenseFormatter = (license, row) =>{
-        return <a color="primary" href={`/#/vehicle/detail/${row._id}`} target="_blank" rel="noopener noreferrer">{license}</a>
+        return <a color="primary"
+                  href={`/#/vehicle/detail/${row._id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={() => openPopUp(row)}
+                  onMouseLeave={()=>setPopup(null)}
+        >{license}</a>
     };
 
     const options ={
@@ -182,22 +177,6 @@ const Companion = props => {
                                        onChange={event => setPlate(event.target.value)}
                                        autoComplete="plate"/>
                             </FormGroup>
-                            {/*<FormGroup>*/}
-                                {/*<DateRangePicker*/}
-                                    {/*startDatePlaceholderText="Início"*/}
-                                    {/*endDatePlaceholderText="Fim"*/}
-                                    {/*startDate={startMoment}*/}
-                                    {/*startDateId="startDate"*/}
-                                    {/*endDate={endMoment}*/}
-                                    {/*endDateId="endDate"*/}
-                                    {/*onDatesChange={({startDate, endDate}) => updateDateRangePicker(startDate, endDate)}*/}
-                                    {/*focusedInput={focusedInput}*/}
-                                    {/*onFocusChange={focusedInput => setFocusedInput(focusedInput)}*/}
-                                    {/*orientation='horizontal'*/}
-                                    {/*openDirection='down'*/}
-                                    {/*isOutsideRange={() => false}*/}
-                                {/*/>*/}
-                            {/*</FormGroup>*/}
                             <FormGroup>
                                 <Button
                                     type="button"
@@ -205,15 +184,42 @@ const Companion = props => {
                                     className="px-4"
                                     onClick={submit}
                                 >Submit</Button>
-                                &nbsp;&nbsp;
-                                {/*<Button*/}
-                                    {/*type="button"*/}
-                                    {/*color="warning"*/}
-                                    {/*className="px-4"*/}
-                                    {/*onClick={clear}*/}
-                                {/*>Clear</Button>*/}
                             </FormGroup>
                         </Form>
+                        {target && <Card className='bg-secondary'>
+                            <CardBody style={{minHeight: '400px'}}>
+                                    <React.Fragment>
+                                        <Row>
+                                            <Col style={{padding: '10px'}}>
+                                                <img
+                                                    style={{maxWidth: '150px'}}
+                                                    src={`${process.env.REACT_APP_STORAGE_URL}/plate/${target.plateImg}`}
+                                                    alt="Imagem da placa"/>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col style={{padding: '10px'}}>
+                                                <img
+                                                    style={{maxWidth: '300px'}}
+                                                    src={`${process.env.REACT_APP_STORAGE_URL}/vehicle/${target.vehicleImg}`}
+                                                    alt="Imagem da placa"/>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col>
+                                                <div>Placa: <strong>{target.license}</strong></div>
+                                                <div>Marca: <strong>{target.model}</strong></div>
+                                                <div>Proprietário: <strong>{target.owner}</strong></div>
+                                                <div>Renavam: <strong>{target.renavam}</strong></div>
+                                                <div>Link Consulta: <a
+                                                    href={`https://consultas.detrannet.sc.gov.br/servicos/consultaveiculo.asp?placa=${target.license}&renavam=${target.renavam}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer">https://consultas.detrannet.sc.gov.br/servicos/consultaveiculo.asp?placa={target.license}&renavam={target.renavam}</a></div>
+                                            </Col>
+                                        </Row>
+                                    </React.Fragment>
+                            </CardBody>
+                        </Card>}
                     </CardBody>
                 </Card>
             </Col>
@@ -240,6 +246,29 @@ const Companion = props => {
                             <TableHeaderColumn dataField='_id' hidden isKey={true}>Açao</TableHeaderColumn>
                         </BootstrapTable>
                     </CardBody>
+                    {
+                        popup?<div style={{position: 'absolute', right: '0'}}>
+                            <Card>
+                                <CardHeader>
+                                    {popup.license}
+                                </CardHeader>
+                                <CardBody>
+                                    <div>
+                                        <img
+                                            style={{maxWidth: '400px', marginBottom: '10px'}}
+                                            src={`${process.env.REACT_APP_STORAGE_URL}/plate/${popup.plate}`}
+                                            alt={popup.plate}/>
+                                    </div>
+                                    <div>
+                                        <img
+                                            style={{maxWidth: '400px'}}
+                                            src={`${process.env.REACT_APP_STORAGE_URL}/vehicle/${popup.vehicle}`}
+                                            alt={popup.vehicle}/>
+                                    </div>
+                                </CardBody>
+                            </Card>
+                        </div>:<div/>
+                    }
                 </Card>
             </Col>
         </div>
