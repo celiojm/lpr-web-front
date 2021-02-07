@@ -96,5 +96,5 @@
       "!src/polyfill.js"
     ]
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://10.0.8.70:5000"
 }
