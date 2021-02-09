@@ -1,9 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Card, CardHeader, CardBody, Input} from 'reactstrap';
+import { AppSwitch } from '@coreui/react';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import 'react-bootstrap-table/dist//react-bootstrap-table-all.min.css';
 import {toast} from 'react-toastify';
 import Services from '../../Services';
+import Context from "../../Context";
 
 const initialParams = {
     page: 1,
@@ -23,14 +25,15 @@ const alertTypes = [
 ];
 
 const Alerts = props => {
+    const {user} = useContext(Context.AuthContext);
 
     const [alerts, setAlerts] = useState([]);
 
     const [dataTotalSize, setDataTotalSize] = useState(0);
     const [params, setParams] = useState(initialParams);
 
-    useEffect(() =>{
-        Services.AlertService.fetchAlerts(params)
+    const fetchAlerts = param =>{
+        Services.AlertService.fetchAlerts(param)
             .then(res =>{
                 if(res.success){
                     setAlerts(res.alerts);
@@ -38,7 +41,11 @@ const Alerts = props => {
                 }else{
                     toast.warn(res.errorMsg);
                 }
-            })
+            });
+    };
+
+    useEffect(() =>{
+        fetchAlerts(params);
     }, [params]);
 
     // /** ==========================
@@ -112,6 +119,30 @@ const Alerts = props => {
 
     const userFormatter = user =>{
         return user.name;
+    };
+
+    const updateState = (id, value, element) =>{
+        Services.AlertService.updateAlert({id: id, query: {active: value}})
+            .then(res =>{
+                if(res.success){
+                    toast.success("Sucesso!");
+                }else{
+                    toast.warn(res.errorMsg);
+                    element.checked = !value;
+                }
+            })
+    };
+
+    const boolFormatter = (value, row) =>{
+        return <AppSwitch
+            className={'mx-1'}
+            variant={'3d'}
+            outline={'alt'}
+            color={'primary'}
+            checked={value}
+            disabled={user._id !== row._id && user.role !== 'admin'}
+            onChange={event=> updateState(row._id, event.target.checked, event.target)}
+            label/>;
     };
 
     /**=====================
@@ -212,9 +243,10 @@ const Alerts = props => {
                         <TableHeaderColumn dataField="plate" dataSort editable={false} width="200">Licença</TableHeaderColumn>
                         <TableHeaderColumn dataField='type' dataSort
                                            dataFormat={typeFormatter} width="200"
-                                           customEditor={ { getElement: createAlertTypeEditor}}>Tipo de Alerta</TableHeaderColumn>
+                                           customEditor={{ getElement: createAlertTypeEditor}}>Tipo de Alerta</TableHeaderColumn>
                         <TableHeaderColumn dataField='note' dataSort width="200">Nota</TableHeaderColumn>
                         <TableHeaderColumn dataField='createdBy' dataSort editable={false} dataFormat={userFormatter} width="200">Criado por</TableHeaderColumn>
+                        <TableHeaderColumn dataField='active' width="200" dataFormat={boolFormatter} editable={false}>Ativo</TableHeaderColumn>
                         <TableHeaderColumn dataField='_id' isKey={true} hidden={true}>_id</TableHeaderColumn>
                     </BootstrapTable>
                 </CardBody>
