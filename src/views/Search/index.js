@@ -152,7 +152,8 @@ const Cameras = props => {
 
     const colorFormatter = color =>{
         let ss = colors.filter(cor => cor.key === color);
-        return ss[0].value;
+        if(ss.length < 0) return '';
+        else return ss[0].value;
     };
 
     const dateFormatter = datetime =>{
