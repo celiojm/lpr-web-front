@@ -316,6 +316,8 @@ const RealTime = props => {
                                 <TableHeaderColumn dataField='color' dataSort editable={false}
                                                    dataFormat={colorFormatter}
                                                    width="100">Cor</TableHeaderColumn>
+                                <TableHeaderColumn dataField='originColor' editable={false} dataFormat={colorFormatter}
+                                                   width="100">Cor de origem</TableHeaderColumn>
                                 <TableHeaderColumn dataField='alert' dataSort
                                                    dataFormat={alertFormatter}
                                                    width="100" editable={false}>Tipo de Alerta</TableHeaderColumn>

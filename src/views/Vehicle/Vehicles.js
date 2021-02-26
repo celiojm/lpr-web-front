@@ -222,6 +222,7 @@ const Vehicles = props => {
                         <TableHeaderColumn dataField='color' dataSort editable={false}
                                            width="100" dataFormat={colorFormatter}
                                            filter={ { type: 'SelectFilter', options: colors}}>Cor</TableHeaderColumn>
+                        <TableHeaderColumn dataField='originColor' editable={false} width="100" dataFormat={colorFormatter}>Cor de origem</TableHeaderColumn>
                         <TableHeaderColumn dataField='date' dataSort editable={false} width="100">Data</TableHeaderColumn>
                         <TableHeaderColumn dataField='time' dataSort editable={false} width="100">Hora</TableHeaderColumn>
                         <TableHeaderColumn dataField='_id' isKey={true} dataFormat={idFormatter} width="150">Açao</TableHeaderColumn>

@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {Card, CardHeader, CardBody, Button, Input, FormGroup, Form, Col, Label} from 'reactstrap';
+import Select from 'react-select';
 import 'react-dates/initialize';
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import './react_dates_overrides.css';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import 'react-bootstrap-table/dist//react-bootstrap-table-all.min.css';
+import 'react-select/dist/react-select.min.css';
 import {toast} from 'react-toastify';
 import Services from '../../Services';
 
@@ -51,12 +53,47 @@ const Cameras = props => {
     const [vehicles, setVehicles] = useState([]);
 
     const [cameras, setCameras] = useState([]);
+    const [camera, setCamera] = useState(null);
+    const [cities, setCities] = useState([]);
+    const [city, setCity] = useState(null);
 
-    useEffect(() =>{
+    useEffect(()=>{
         Services.CameraService.fetch()
             .then(res =>{
                 if(res.success){
-                    setCameras(res.cameras);
+                    let cams;
+                    if(city)
+                        cams = res.cameras.filter(element => element.city._id === city.value);
+                    else
+                        cams = res.cameras;
+                    let formatted = [];
+                    for (let item of cams){
+                        formatted.push({
+                            value: item._id,
+                            label: item.street,
+                            id: item.cameraId
+                        });
+                    }
+                    setCameras(formatted);
+                    setCamera(null);
+                }else{
+                    toast.warn(res.errorMsg);
+                }
+            });
+    }, [city]);
+
+    useEffect(() =>{
+        Services.CityService.fetchAll()
+            .then(res =>{
+                if(res.success){
+                    let cities = [];
+                    for(let city of res.cities){
+                        cities.push({
+                            value: city._id,
+                            label: `${city.city} - ${city.state}`
+                        })
+                    }
+                    setCities(cities);
                 }else{
                     toast.warn(res.errorMsg);
                 }
@@ -99,6 +136,8 @@ const Cameras = props => {
         body.originColor = originColor;
         body.startDate = startDate;
         body.endDate = endDate;
+        if(city) body.city = city.value;
+        if(camera) body.camera = camera.id;
         Services.VehicleService.search(body)
             .then(res => {
                 if(res.success){
@@ -248,7 +287,7 @@ const Cameras = props => {
                             <FormGroup>
                                 <Input type="select"
                                        name="originColor"
-                                       value={color}
+                                       value={originColor}
                                        onChange={event => setOriginColor(event.target.value)}
                                        id="originColor">
                                     <option value="">Cor de origem</option>
@@ -256,6 +295,28 @@ const Cameras = props => {
                                         colors.map(color => (<option value={color.key} key={color.key}>{color.value}</option>))
                                     }
                                 </Input>
+                            </FormGroup>
+                            <FormGroup>
+                                <Select
+                                    name="city"
+                                    id="city"
+                                    value={city}
+                                    options={cities}
+                                    placeholder="Cidade"
+                                    style={{textAlign:'left'}}
+                                    onChange={setCity}
+                                />
+                            </FormGroup>
+                            <FormGroup>
+                                <Select
+                                    name="camera"
+                                    id="camera"
+                                    value={camera}
+                                    options={cameras}
+                                    placeholder="Camera"
+                                    style={{textAlign:'left'}}
+                                    onChange={setCamera}
+                                />
                             </FormGroup>
                             <FormGroup>
                                 <DateRangePicker
@@ -312,6 +373,7 @@ const Cameras = props => {
                             <TableHeaderColumn dataField='camera' dataFormat={cameraFormatter}>Câmera</TableHeaderColumn>
                             <TableHeaderColumn dataField='model'  width="250">Marca/Modelo</TableHeaderColumn>
                             <TableHeaderColumn dataField='color' dataFormat={colorFormatter} width="100">Cor</TableHeaderColumn>
+                            <TableHeaderColumn dataField='originColor' dataFormat={colorFormatter} width="100">Cor de origem</TableHeaderColumn>
                             <TableHeaderColumn dataField='_id' hidden isKey={true}>Açao</TableHeaderColumn>
                         </BootstrapTable>
                     </CardBody>

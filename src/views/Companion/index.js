@@ -109,7 +109,9 @@ const Companion = props => {
 
     const colorFormatter = color =>{
         let ss = colors.filter(cor => cor.key === color);
-        return ss[0].value;
+        if(ss.length > 0)
+            return ss[0].value;
+        else return "";
     };
 
     const dateFormatter = datetime =>{
@@ -240,9 +242,10 @@ const Companion = props => {
 
                             <TableHeaderColumn dataField="license" width="100" dataFormat={licenseFormatter}>Placa</TableHeaderColumn>
                             <TableHeaderColumn dataField="createdAt" width="150" dataFormat={dateFormatter}>Lido em: </TableHeaderColumn>
-                            <TableHeaderColumn dataField='camera' dataFormat={cameraFormatter}>Câmera</TableHeaderColumn>
+                            <TableHeaderColumn dataField='camera' dataFormat={cameraFormatter} width="150">Câmera</TableHeaderColumn>
                             <TableHeaderColumn dataField='model'  width="250">Marca/Modelo</TableHeaderColumn>
                             <TableHeaderColumn dataField='color' dataFormat={colorFormatter} width="100">Cor</TableHeaderColumn>
+                            <TableHeaderColumn dataField='originColor' dataFormat={colorFormatter} width="100">Cor de origem</TableHeaderColumn>
                             <TableHeaderColumn dataField='_id' hidden isKey={true}>Açao</TableHeaderColumn>
                         </BootstrapTable>
                     </CardBody>
