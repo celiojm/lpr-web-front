@@ -17,7 +17,7 @@ import RealTime from './views/Vehicle/RealTime';
 import CameraMap from './views/Map/Cameras';
 import Search from './views/Search';
 import Companion from './views/Companion';
-// import Page404 from './views/Pages/Page404';
+import Logs from './views/Logs';
 
 export const AdminRoute = [
     { path: '/dashboard', name: 'Dashboard', component: AdminDashBoard, exact: true },
@@ -38,6 +38,7 @@ export const AdminRoute = [
     {path: '/map/camera', name: 'Câmeras no mapa', component: CameraMap, exact: true},
     {path: '/search', name: 'Parâmetros de Pesquisa', component: Search, exact: true},
     {path: '/companion', name: 'Companheiro', component: Companion, exact: true},
+    {path: '/log', name: 'Histórico', component: Logs, exact: true},
     // {path: '*',  component: Page404, exact: true},
 ];
 

@@ -87,6 +87,11 @@ export const adminNav = {
           url: '/companion',
       },
       {
+          name: 'Histórico',
+          icon: 'fa fa-automobile',
+          url: '/log',
+      },
+      {
           name: 'Usuário',
           icon: 'icon-user',
           children: [
