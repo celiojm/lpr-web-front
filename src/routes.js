@@ -17,7 +17,7 @@ import RealTime from './views/Vehicle/RealTime';
 import CameraMap from './views/Map/Cameras';
 import Search from './views/Search';
 import Companion from './views/Companion';
-import Logs from './views/Logs';
+import Logs from './views/Log';
 
 export const AdminRoute = [
     { path: '/dashboard', name: 'Dashboard', component: AdminDashBoard, exact: true },
